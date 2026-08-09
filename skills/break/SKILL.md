@@ -11,9 +11,9 @@ metadata:
 
 **Mission**: Attempt to make the proposed system fail before reality does.
 
-Use Break after there is sufficient shared understanding of the artifact (e.g., after running `/think`). Break is adversarial analysis without becoming contrarian for its own sake.
+Use Break after there is sufficient shared understanding of the artifact (e.g., after running `/frame`). Break is adversarial analysis without becoming contrarian for its own sake.
 
-**Triggers**: `/break <document>` or `/break THINK-REVIEW.md`
+**Triggers**: `/break <document>` or `/break FRAME-REVIEW.md`
 
 ---
 

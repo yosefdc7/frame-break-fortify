@@ -1,4 +1,4 @@
-# Think → Break → Build
+# Frame → Break → Fortify
 
 Agent Skills for reviewing and strengthening plans, playbooks, frameworks, strategies, change-management plans, operating models, procedures, specifications, governance documents, and similar business artifacts.
 
@@ -6,9 +6,9 @@ Agent Skills for reviewing and strengthening plans, playbooks, frameworks, strat
 
 The system optimizes for **process predictability rather than identical answers**.
 
-1. **Think** — Understand and establish the truth.
+1. **Frame** — Understand and establish the truth.
 2. **Break** — Stress-test and expose weakness.
-3. **Build** — Strengthen and make executable.
+3. **Fortify** — Strengthen and make executable.
 
 Evidence governs all three skills.
 
@@ -16,20 +16,25 @@ Evidence governs all three skills.
 
 Each skill can be used independently or in sequence.
 
-### `/think`
+### `/frame`
 **Mission**: Reconstruct the document into a clear, evidence-aware mental model before judging or changing it.
-**Usage**: `/think <document>`
+**Usage**: `/frame <document>`
 
 ### `/break`
-**Mission**: Attempt to make the proposed system fail before reality does. adversarial analysis without becoming contrarian for its own sake.
-**Usage**: `/break <document>` or `/break THINK-REVIEW.md`
+**Mission**: Attempt to make the proposed system fail before reality does. Adversarial analysis without becoming contrarian for its own sake.
+**Usage**: `/break <document>` or `/break FRAME-REVIEW.md`
 
-### `/build`
+### `/fortify`
 **Mission**: Turn validated findings into the strongest practical version of the artifact without unnecessarily expanding its scope.
-**Usage**: `/build <document>` or `/build <document> BREAK-REVIEW.md`
+**Usage**: `/fortify <document>` or `/fortify <document> BREAK-REVIEW.md`
 
 ## The Evidence Contract
 
 Every skill follows a strict evidence contract. We prioritize governing laws and standards over unsupported common practice, and we classify claims as Verified, Supported, Inferred, Assumed, or Unknown.
 
-*Think like a reviewer. Break like an adversary. Build like an architect. Evidence governs all three.*
+## Project Management Guide
+
+See [INSTRUCTIONS_PM.md](docs/INSTRUCTIONS_PM.md) for a detailed guide on how Project Managers can use this triplet to validate assumptions, run premortems, and build antifragile project artifacts.
+
+---
+*Frame like a reviewer. Break like an adversary. Fortify like an architect. Evidence governs all three.*

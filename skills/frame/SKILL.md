@@ -1,5 +1,5 @@
 ---
-name: think
+name: frame
 description: Reconstruct plans and business documents to establish intent, assumptions, and evidence.
 disable-model-invocation: true
 license: MIT
@@ -7,11 +7,11 @@ metadata:
   version: "0.1.0"
 ---
 
-# Think Skill
+# Frame Skill
 
 **Mission**: Reconstruct the document into a clear, evidence-aware mental model before judging or changing it.
 
-Use Think when:
+Use Frame when:
 * Reviewing an unfamiliar plan or playbook
 * The author's intent is unclear
 * Assumptions are hidden
@@ -20,7 +20,7 @@ Use Think when:
 * Success criteria are ambiguous
 * The user wants a document grilled before it is approved
 
-**Triggers**: `/think <document>`
+**Triggers**: `/frame <document>`
 
 ---
 
@@ -64,7 +64,7 @@ For genuine unresolved decisions, ask the user **one question at a time**.
 Always provide a recommendation and explain the trade-offs.
 Exhaust all available codebase and documentation research before asking the user a question.
 
-### Step 6 — Produce the Think Brief
+### Step 6 — Produce the Frame Brief
 Generate an Antigravity Artifact containing:
 1. Executive interpretation
 2. Intended outcomes
@@ -81,4 +81,4 @@ Generate an Antigravity Artifact containing:
 
 ## Completion Criterion
 
-Think is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. Explicitly document any remaining ambiguity as an 'Unknown' rather than omitting it.
+Frame is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. Explicitly document any remaining ambiguity as an 'Unknown' rather than omitting it.

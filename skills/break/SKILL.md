@@ -1,10 +1,6 @@
 ---
 name: break
 description: Stress-test and expose weakness in plans, playbooks, and business documents.
-disable-model-invocation: true
-license: MIT
-metadata:
-  version: "0.1.0"
 ---
 
 # Break Skill

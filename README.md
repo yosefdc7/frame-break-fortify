@@ -8,7 +8,7 @@ The system optimizes for **process predictability rather than identical answers*
 
 1. **Frame** — Understand and establish the truth.
 2. **Break** — Stress-test and expose weakness.
-3. **Fortify** — Strengthen and make executable.
+3. **Fortify** — Strengthen with margin of safety and antifragility.
 
 Evidence governs all three skills.
 
@@ -25,7 +25,7 @@ Each skill can be used independently or in sequence.
 **Usage**: `/break <document>` or `/break FRAME-REVIEW.md`
 
 ### `/fortify`
-**Mission**: Turn validated findings into the strongest practical version of the artifact without unnecessarily expanding its scope.
+**Mission**: Actively strengthen the plan by building **margin of safety** and **antifragility** into it, grounded in external knowledge. Fortify is an engineer, not a compiler — it clusters Break findings into themes and produces targeted recommendations (cited sources, Redundancy / Contingency Triggers / Graceful Degradation, optionality, learning loops), then a strengthened artifact.
 **Usage**: `/fortify <document>` or `/fortify <document> BREAK-REVIEW.md`
 
 ## The Evidence Contract

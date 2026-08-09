@@ -29,7 +29,7 @@ Project plans fail mostly due to unmapped dependencies and unrealistic sequencin
 Change management artifacts are notorious for containing "fluff" and untestable goals.
 
 *   **The Problem**: A change management plan has a goal to "Ensure stakeholders are aligned" or "Users understand the new tool."
-*   **The Solution**: The `/fortify` skill directly targets this weakness. Step 4 explicitly mandates replacing vague completion language with **observable criteria**.
+*   **The Solution**: The `/fortify` skill directly targets this weakness. It clusters `/break` findings into themes and produces **targeted recommendations grounded in external knowledge** — each with a cited source and a margin of safety control (**Redundancy** for Blockers, **Contingency Triggers** for Major Concerns, **Graceful Degradation** for Watch Items). It also mandates replacing vague completion language with **observable criteria**.
 *   **The Result**: It forces you to upgrade *"users understand the change"* to *"affected users demonstrate the required process during readiness validation."* Furthermore, `/break` explicitly tests for "human-behavior failures," which is the root cause of most failed change management plans.
 
 ## 4. Validating Playbooks & Processes

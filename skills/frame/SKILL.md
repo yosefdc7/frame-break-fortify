@@ -56,6 +56,8 @@ Expose broken or missing links.
 ### Step 3 — Establish Evidence
 Classify important statements as Verified, Supported, Inferred, Assumed, or Unknown. Research material factual questions rather than asking the user to answer things that can be established independently.
 
+→ Findings from evidence classification become direct inputs to the ambiguity scan in Step 4: claims classified as Assumed or Unknown are the highest-priority ambiguity candidates.
+
 ### Step 4 — Find Ambiguity
 Identify undefined terminology, conflicting requirements, missing owners, unclear dependencies, unclear decision rights, non-measurable outcomes, and assumptions disguised as facts.
 
@@ -73,15 +75,30 @@ Generate an Antigravity Artifact containing:
 10. Readiness for Break (Ready or Not Ready)
 
 ### Step 6 — Grill to Readiness
-If the Frame Brief concludes the plan is **not ready for Break** (e.g., due to unresolved baselines, dates, owners, scope, measurable launch gates, or other material missing elements):
-Do NOT simply leave them as unknowns and stop. You must actively work to resolve them to prepare the document for the Break skill.
-Initiate an interview with the user. Ask about the missing items **one question at a time**.
-For each question, always provide a recommendation and explain the trade-offs.
-Exhaust all available codebase and documentation research before asking the user a question.
-As the user answers, update the Frame Brief. Continue this loop until the plan is explicitly "Ready for Break".
+
+If the Frame Brief concludes the plan is **not ready for Break** (due to unresolved baselines, owners, scope, measurable gates, or other material gaps):
+
+**Initiate a structured interview with the user.** Present questions one at a time.
+
+For every gap classified as blocking readiness:
+* Generate a specific, answerable question that would resolve it.
+* **Present the user with structured options (A, B, C) representing distinct resolution paths.** Each option must describe: the approach, its risk posture, and its trade-offs. Always mark one option as *(recommended)* with a brief justification. The user needs a menu of choices, not a single prescription.
+* Prefer qualitative assessments over invented numbers or dates. If a timeline is unknown, describe the *shape* of the constraint (e.g., "this dependency sits on the critical path; any delay here pushes the entire delivery") rather than fabricating a calendar date.
+
+**Exhaust all available codebase and documentation research before asking the user a question.**
+
+**Minimum coverage rule**: Produce at least one question for each section of the Frame Brief (Intent, Logic, Evidence, Ambiguity, Dependencies, Decisions) that contains unresolved gaps. If a section has no gaps, note it explicitly and move on. There is no upper limit — continue until every blocking gap has a disposition.
+
+**Escalation trigger**: If the same gap recurs across three or more questions without resolution, pause the interview and flag it as a *structural ambiguity* — a gap that may require reframing the document's scope rather than filling in blanks.
+
+For a catalog of probing question patterns organized by assessment dimension, see `references/grill-questions.md`.
+
+As the user answers, update the Frame Brief in real time. The interview ends when the Frame Brief contains no unresolved blocking gaps — the verdict line changes from "Not Ready" to "Ready for Break."
 
 ---
 
 ## Completion Criterion
 
-Frame is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. If the plan was initially not ready for Break, completion requires successfully interviewing the user to resolve the missing elements until the plan is fully ready for Break.
+**Pre-interview gate**: Before entering the Grill to Readiness interview, the agent must identify at least one unresolved element per section of the Frame Brief (Intent, Logic, Evidence, Ambiguity, Dependencies, Decisions). If any section genuinely has no gaps, state why explicitly. This ensures the interview is driven by structural coverage rather than surface impression.
+
+Frame is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. If the plan was initially not ready for Break, completion requires successfully interviewing the user to resolve the missing elements until the Frame Brief contains no unresolved blocking gaps and the verdict is explicitly "Ready for Break."

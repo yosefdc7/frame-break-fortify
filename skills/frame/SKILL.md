@@ -59,12 +59,7 @@ Classify important statements as Verified, Supported, Inferred, Assumed, or Unkn
 ### Step 4 — Find Ambiguity
 Identify undefined terminology, conflicting requirements, missing owners, unclear dependencies, unclear decision rights, non-measurable outcomes, and assumptions disguised as facts.
 
-### Step 5 — Grill Decisions
-For genuine unresolved decisions, ask the user **one question at a time**.
-Always provide a recommendation and explain the trade-offs.
-Exhaust all available codebase and documentation research before asking the user a question.
-
-### Step 6 — Produce the Frame Brief
+### Step 5 — Produce the Frame Brief
 Generate an Antigravity Artifact containing:
 1. Executive interpretation
 2. Intended outcomes
@@ -75,10 +70,18 @@ Generate an Antigravity Artifact containing:
 7. Unknowns
 8. Decisions requiring confirmation
 9. Potential contradictions
-10. Recommendation: ready or not ready for Break
+10. Readiness for Break (Ready or Not Ready)
+
+### Step 6 — Grill to Readiness
+If the Frame Brief concludes the plan is **not ready for Break** (e.g., due to unresolved baselines, dates, owners, scope, measurable launch gates, or other material missing elements):
+Do NOT simply leave them as unknowns and stop. You must actively work to resolve them to prepare the document for the Break skill.
+Initiate an interview with the user. Ask about the missing items **one question at a time**.
+For each question, always provide a recommendation and explain the trade-offs.
+Exhaust all available codebase and documentation research before asking the user a question.
+As the user answers, update the Frame Brief. Continue this loop until the plan is explicitly "Ready for Break".
 
 ---
 
 ## Completion Criterion
 
-Frame is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. Explicitly document any remaining ambiguity as an 'Unknown' rather than omitting it.
+Frame is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. If the plan was initially not ready for Break, completion requires successfully interviewing the user to resolve the missing elements until the plan is fully ready for Break.

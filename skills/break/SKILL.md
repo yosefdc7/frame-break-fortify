@@ -69,6 +69,13 @@ Use qualitative priority labels (Blocker, Major concern, etc.) instead of numeri
 Every Blocker and Major Concern receives: Finding, Why it matters, Evidence, Failure scenario, Recommended response, Trade-off, Decision owner (if known).
 Isolate your output to the Break Report; leave the original plan unmodified.
 
+### Step 9 — Grill to Readiness
+If the Break Report concludes the plan is **Not ready** for Fortify (e.g., due to fatal blockers or decisions requiring human judgment):
+Do NOT simply leave them unresolved and stop. You must actively work to resolve the critical items to prepare the document for the Fortify skill.
+Initiate an interview with the user. Ask about the blockers or decisions **one question at a time**.
+For each question, always provide a recommendation and explain the trade-offs.
+As the user answers, update the Break Report's recommended responses and verdict. Continue this loop until the plan is explicitly "Ready to strengthen" (ready for Fortify).
+
 ---
 
 ## Output
@@ -93,4 +100,4 @@ Produce a Break Report (as an Antigravity Artifact) containing:
 
 ## Completion Criterion
 
-Break is complete when every major stated objective has been tested against plausible failure conditions and every material weakness is recorded, supported with reasoning/evidence, prioritized, and given a recommended response.
+Break is complete when every major stated objective has been tested against plausible failure conditions and every material weakness is recorded, supported with reasoning/evidence, prioritized, and given a recommended response. If the report was initially 'Not ready', completion requires successfully interviewing the user to resolve critical blockers and decisions until it is 'Ready to strengthen'.

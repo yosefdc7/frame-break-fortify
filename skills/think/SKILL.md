@@ -37,7 +37,7 @@ Use Think when:
 
 ## Process
 
-Do not critique yet. Focus on reconstruction and establishing truth.
+Withhold all critique. Focus strictly on reconstruction and establishing truth.
 
 ### Step 1 — Establish Intent
 Determine:
@@ -62,7 +62,7 @@ Identify undefined terminology, conflicting requirements, missing owners, unclea
 ### Step 5 — Grill Decisions
 For genuine unresolved decisions, ask the user **one question at a time**.
 Always provide a recommendation and explain the trade-offs.
-Do not ask the user a question merely because you have not performed enough legwork.
+Exhaust all available codebase and documentation research before asking the user a question.
 
 ### Step 6 — Produce the Think Brief
 Generate an Antigravity Artifact containing:

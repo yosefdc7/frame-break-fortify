@@ -34,7 +34,7 @@ Use Break after there is sufficient shared understanding of the artifact (e.g., 
 Identify what constitutes failure (e.g., adoption target missed, project delayed, budget overrun, dependency failure).
 
 ### Step 2 — Run a Premortem
-Assume: "It is six months later and this initiative failed badly." Work backward to generate plausible causal chains explaining the failure. Do not merely produce generic risks.
+Assume: "It is six months later and this initiative failed badly." Work backward to generate plausible causal chains explaining the failure. Generate highly specific, contextual failure chains rather than generic risks.
 
 ### Step 3 — Apply Inversion
 Ask: "What conditions would almost guarantee failure?" Use the inverse to expose design requirements that may be absent.
@@ -63,11 +63,11 @@ Classify findings:
 * **Watch item**: Plausible but manageable uncertainty.
 * **Observation**: Useful improvement without material execution risk.
 
-Avoid pseudo-precise numeric risk scores unless the organization uses them.
+Use qualitative priority labels (Blocker, Major concern, etc.) instead of numeric risk scores.
 
 ### Step 8 — Recommend
 Every Blocker and Major Concern receives: Finding, Why it matters, Evidence, Failure scenario, Recommended response, Trade-off, Decision owner (if known).
-Do not rewrite the plan yet.
+Isolate your output to the Break Report; leave the original plan unmodified.
 
 ---
 

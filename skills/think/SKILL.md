@@ -1,6 +1,7 @@
 ---
 name: think
-description: Reconstruct and grill plans, playbooks, frameworks and business documents to establish intent, assumptions, dependencies, evidence and unresolved decisions before they are stress-tested or changed.
+description: Reconstruct plans and business documents to establish intent, assumptions, and evidence.
+disable-model-invocation: true
 license: MIT
 metadata:
   version: "0.1.0"
@@ -80,4 +81,4 @@ Generate an Antigravity Artifact containing:
 
 ## Completion Criterion
 
-Think is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. Material ambiguity must never disappear merely because the agent wants to finish.
+Think is complete only when every material element of the artifact can be represented as evidence, assumption, decision, inference, or explicitly acknowledged unknown. Explicitly document any remaining ambiguity as an 'Unknown' rather than omitting it.

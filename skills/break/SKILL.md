@@ -19,6 +19,7 @@ Use Break when:
 * The user wants a premortem or adversarial review
 * Important weaknesses require decisions from people other than the current user
 * A prior Break Report needs to be resumed after new stakeholder input arrives
+* Fortify returns new evidence that materially invalidates a prior Break treatment
 
 **Triggers**:
 * `/break <document>`
@@ -215,7 +216,7 @@ Watch items and observations do not require a treatment disposition unless they 
 
 ---
 
-## Step 10 — Resume a Break Report
+## Step 10 — Resume or Reopen a Break Report
 
 When Break receives an existing Break Report, treat it as a continuation of prior work rather than automatically starting a new adversarial review.
 
@@ -223,13 +224,25 @@ On resume:
 1. Preserve all existing `BF-###` IDs.
 2. Inspect Open and Deferred Blockers / Major concerns first.
 3. Re-check any unresolved upstream `FQ-###` dependencies.
-4. Detect newly supplied stakeholder answers, decisions, evidence, or updated artifact content.
+4. Detect newly supplied stakeholder answers, decisions, evidence, updated artifact content, or Fortify source conflicts.
 5. Update the affected finding's disposition and recommended response.
 6. Re-run only the scenarios, dependencies, contradictions, or failure chains materially affected by the new information.
 7. Create a new `BF-###` finding only when the new information reveals a genuinely new failure mode or materially distinct weakness.
 8. Do not repeat questions already resolved or explicitly accepted as risk unless new evidence invalidates the prior disposition.
 9. Do not restart completed Break analysis unless the underlying artifact materially changed.
 10. Recalculate Fortify readiness.
+
+### When Fortify returns a Source Conflict
+
+If Fortify reports that a Governing or Reliable source materially invalidates an existing Break treatment:
+1. Reuse the same `BF-###` ID.
+2. Preserve the previous disposition and decision as history.
+3. Set the current finding back to **Open** for re-evaluation.
+4. Record the conflicting `FS-###` source and why it changes the treatment.
+5. Re-test only the affected failure path and treatment options.
+6. Obtain a new terminal disposition: Accepted recommendation, Alternative selected, Accepted risk when legitimate, or Deferred.
+
+Do not create a duplicate finding for the same failure mode merely because better evidence arrived later.
 
 The user may respond by finding ID, for example:
 
@@ -347,6 +360,6 @@ Break does **not** require the current user to personally make every decision be
 
 A completed Break Report may legitimately end with **Awaiting External Input** when material treatment decisions or evidence have been identified and routed for follow-up.
 
-When those answers or decisions become available, the user can run Break again on the existing Break Report. Break must resume from the saved `BF-###` state, incorporate the new information, selectively re-test affected failure paths, and recalculate Fortify readiness without restarting completed work.
+When answers, decisions, or materially stronger evidence become available, the user can run Break again on the existing Break Report. Break must preserve `BF-###` history, selectively re-test affected failure paths, and recalculate Fortify readiness without restarting completed work.
 
 The goal is not to eliminate every risk or uncertainty immediately. The goal is to expose material failure modes, make the treatment decision explicit, preserve accepted risk, route unresolved decisions to the right people, and leave a reliable state that can be resumed later.

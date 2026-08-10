@@ -22,6 +22,8 @@ The central workflow rule is:
 
 Frame can complete while stakeholder answers are still outstanding. Break can complete while treatment decisions are still outstanding. The next skill must respect the readiness gate from the previous skill rather than silently filling gaps.
 
+Fortify adds one more control: **material external sources used as the design basis should be visible and user-approved**. The user can supply approved references or ask Fortify to search for candidate sources and validate them before they become the basis for recommendations.
+
 ---
 
 ## The Pipeline
@@ -60,11 +62,13 @@ SOURCE DOCUMENT
          ▼
 ┌──────────────────────────┐
 │ FORTIFY                  │
+│ choose source basis      │
+│ validate sources         │
 │ engineer controls        │
-│ preserve traceability    │
 └────────────┬─────────────┘
              ▼
- Targeted Recommendations
+ Source Register
+ + Targeted Recommendations
  + Strengthened Artifact
 ```
 
@@ -190,6 +194,20 @@ When no Break Report exists, Fortify may still strengthen a document, but it mus
 
 Direct mode is useful when the user intentionally skips Break. It does not recreate Break inside Fortify.
 
+### User-validated source grounding
+
+Before material externally grounded recommendations are generated, Fortify asks how the user wants to establish the design basis:
+
+* **Provide sources** — upload files or share links to approved PPMs/playbooks, internal policies, frameworks, industry standards, scientific studies, methodologies, or other trusted references.
+* **Search for candidates** — Fortify searches for high-quality primary sources and presents a concise candidate set for validation before using them as the design basis.
+* **Hybrid** — use user-supplied references first, then search for gaps or corroboration.
+
+AI-discovered frameworks, studies, standards, or methodologies remain **Candidate — Awaiting User Validation** until the user approves them. Once approved, they become **User Approved** design-basis sources.
+
+Binding laws, regulations, contracts, and mandatory policies are treated separately as **Governing** constraints. They are surfaced whether or not they are the user's preferred methodology.
+
+Fortify keeps a **Source Register** showing the source, type, what it supports, applicability, limitations, and status.
+
 ### Margin of safety is mechanism-driven
 
 Break priority influences how strong a treatment should be, but does **not** mechanically dictate one control type.
@@ -222,10 +240,12 @@ FQ-###  clarification or external question
    ↓
 BF-###  failure finding derived from the understood system
    ↓
+Approved Source Basis
+   ↓
 Fortify recommendation / artifact change
 ```
 
-Fortify changes should map back to the original requirement, an `FQ-###`, a `BF-###`, external evidence, a Direct-mode provisional weakness, or an explicit user decision.
+Fortify changes should map back to the original requirement, an `FQ-###`, a `BF-###`, a Governing or User Approved source, a Direct-mode provisional weakness, or an explicit user decision.
 
 ---
 
@@ -237,6 +257,7 @@ Every skill follows the same evidence contract:
 * **Claim classification** — distinguish *Verified, Supported, Inferred, Assumed,* and *Unknown*.
 * **Source fit** — external frameworks apply only when they meaningfully fit the artifact and context.
 * **Citation rule** — recommendations grounded in external standards, research, regulation, or recognized frameworks identify their source.
+* **Fortify source validation** — AI-discovered material design-basis sources are candidates until the user validates them.
 
 See `skills/*/references/evidence-contract.md`.
 
@@ -246,10 +267,10 @@ See `skills/*/references/evidence-contract.md`.
 
 | You bring | Frame produces | Break produces | Fortify produces |
 |---|---|---|---|
-| Draft plan | Evidence-aware model + Question Register | Failure paths + treatment decisions | Targeted recommendations + strengthened plan |
-| Playbook | Logic + dependencies + routed questions | Handoff/control failures | Controls + contingencies |
-| Change strategy | Stakeholder/decision clarity | Human-behavior and adoption failure paths | Observable criteria + resilience mechanisms |
-| Governance document | Decision rights + evidence gaps | Bottlenecks + control weaknesses | Stronger governance design + residual-risk treatment |
+| Draft plan | Evidence-aware model + Question Register | Failure paths + treatment decisions | Source Register + targeted recommendations + strengthened plan |
+| Playbook | Logic + dependencies + routed questions | Handoff/control failures | Approved design basis + controls + contingencies |
+| Change strategy | Stakeholder/decision clarity | Human-behavior and adoption failure paths | Validated methodology + observable criteria + resilience mechanisms |
+| Governance document | Decision rights + evidence gaps | Bottlenecks + control weaknesses | Governing/approved sources + stronger governance design |
 
 ---
 

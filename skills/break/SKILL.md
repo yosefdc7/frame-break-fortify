@@ -11,7 +11,7 @@ metadata:
 
 **Mission**: Attempt to make the proposed system fail before reality does, while turning unresolved blockers and decisions into explicit findings that can be resolved now, accepted as risk, or routed to the right person later.
 
-Use Break after there is sufficient shared understanding of the artifact (for example, after `/frame`). Break is adversarial analysis without becoming contrarian for its own sake.
+Use Break after there is sufficient shared understanding of the artifact, ideally after `/frame`. Break is adversarial analysis without becoming contrarian for its own sake.
 
 Use Break when:
 * A plan appears coherent but has not been stress-tested
@@ -36,14 +36,14 @@ Break must distinguish between:
 
 Discovering a blocker, explaining how it propagates, recommending a response, and identifying the decision or input still required is a successful Break outcome even when the current user cannot personally resolve it immediately.
 
-Break therefore never forces the current user to make every decision before the analysis can complete.
-
-A material Break finding may have one of these dispositions:
+A Blocker or Major concern may have one of these states/dispositions:
+* **Open** — transient; currently unresolved and not yet dispositioned
 * **Accepted recommendation** — the recommended response is chosen
 * **Alternative selected** — a different response is chosen
 * **Accepted risk** — the weakness is consciously left untreated with the trade-off recorded
 * **Deferred** — the decision or input is saved for another person or team
-* **Open** — unresolved and not yet routed
+
+`Open` is not a terminal disposition. A material Blocker or Major concern must become **Accepted recommendation, Alternative selected, Accepted risk, or Deferred** before Break Status can become Complete.
 
 A deferred finding is not merely an Unknown. It is a known failure exposure with an explicit decision or information need and a disposition.
 
@@ -61,6 +61,24 @@ A deferred finding is not merely an Unknown. It is a known failure exposure with
 ---
 
 ## Process
+
+### Step 0 — Check Frame Readiness
+
+When a Frame Brief is supplied, inspect **Frame Status** and **Readiness for Break** before beginning full adversarial analysis.
+
+* **Ready for Break** — proceed normally.
+* **Ready for Break with Conditions** — proceed while preserving the listed conditions and blocking/non-blocking `FQ-###` context. Do not stress-test from assumptions that contradict those conditions.
+* **Awaiting External Input** — identify the blocking `FQ-###` questions first. Break may stress-test unaffected areas, but it must not treat a failure path as fully analyzed when its logic materially depends on missing upstream information.
+* **Frame Status: In Progress** — treat the Frame Brief as not fully reconstructed. Break may perform clearly labeled partial analysis on stable areas, but must not claim full Break completion while material upstream ambiguity prevents required objectives from being stress-tested.
+
+When upstream `FQ-###` questions block analysis:
+1. Preserve those IDs in the Break Report under **Upstream Frame Dependencies**.
+2. Do not invent answers to them.
+3. Do not create a `BF-###` finding merely to disguise an unresolved Frame question.
+4. Analyze unaffected failure paths when useful.
+5. Keep Break Status **In Progress** if the missing Frame input prevents any material objective from being fully stress-tested.
+
+If no Frame Brief is supplied, Break may proceed when the artifact has sufficient shared understanding, but must not pretend that a formal Frame readiness assessment occurred.
 
 ### Step 1 — Establish the Target
 Identify what constitutes meaningful failure for this artifact, such as:
@@ -169,6 +187,11 @@ Do not force all questions into identical A/B/C semantics. Options must represen
 
 When risk acceptance is a legitimate governance choice, it may be offered as an option. Do **not** present risk acceptance as a valid substitute for a mandatory law, regulation, safety requirement, contractual obligation, or other non-waivable constraint.
 
+When the user selects a treatment:
+1. Mark the finding **Accepted recommendation** or **Alternative selected**.
+2. Record the selected treatment and trade-off.
+3. Update Fortify readiness.
+
 When the user chooses D, says they do not know, or asks to save the item for another person:
 1. Mark the finding **Deferred**.
 2. Record the unresolved decision or input under **Decisions / Inputs Needed From Others**.
@@ -186,9 +209,9 @@ When the user explicitly accepts the risk:
 
 As the user resolves, accepts, or defers findings, update the Break Report in real time.
 
-The interview ends when every material Blocker and Major concern has a disposition: **Accepted recommendation, Alternative selected, Accepted risk, Deferred, or Open**.
+The interview ends when every Blocker and Major concern is **Accepted recommendation, Alternative selected, Accepted risk, or Deferred**. A material Blocker or Major concern left **Open** means Break remains In Progress.
 
-Break does not require every material finding to be fully resolved before producing a completed Break Report.
+Watch items and observations do not require a treatment disposition unless they are escalated into a Blocker or Major concern.
 
 ---
 
@@ -198,14 +221,15 @@ When Break receives an existing Break Report, treat it as a continuation of prio
 
 On resume:
 1. Preserve all existing `BF-###` IDs.
-2. Inspect unresolved, Deferred, and Open Blockers / Major concerns first.
-3. Detect newly supplied stakeholder answers, decisions, evidence, or updated artifact content.
-4. Update the affected finding's disposition and recommended response.
-5. Re-run only the scenarios, dependencies, contradictions, or failure chains materially affected by the new information.
-6. Create a new `BF-###` finding only when the new information reveals a genuinely new failure mode or materially distinct weakness.
-7. Do not repeat questions already resolved or explicitly accepted as risk unless new evidence invalidates the prior disposition.
-8. Do not restart completed Break analysis unless the underlying artifact materially changed.
-9. Recalculate Fortify readiness.
+2. Inspect Open and Deferred Blockers / Major concerns first.
+3. Re-check any unresolved upstream `FQ-###` dependencies.
+4. Detect newly supplied stakeholder answers, decisions, evidence, or updated artifact content.
+5. Update the affected finding's disposition and recommended response.
+6. Re-run only the scenarios, dependencies, contradictions, or failure chains materially affected by the new information.
+7. Create a new `BF-###` finding only when the new information reveals a genuinely new failure mode or materially distinct weakness.
+8. Do not repeat questions already resolved or explicitly accepted as risk unless new evidence invalidates the prior disposition.
+9. Do not restart completed Break analysis unless the underlying artifact materially changed.
+10. Recalculate Fortify readiness.
 
 The user may respond by finding ID, for example:
 
@@ -217,7 +241,7 @@ Break should incorporate that decision without requiring the original finding or
 
 ## Output
 
-Produce a Break Report (as an Antigravity Artifact) containing:
+Produce a persistent Break Report containing:
 
 1. Failure thesis
 2. Top failure paths
@@ -231,14 +255,26 @@ Produce a Break Report (as an Antigravity Artifact) containing:
 10. Major concerns
 11. Watch items
 12. Recommended responses
-13. Decisions / Inputs Needed From Others
-14. Accepted risks
-15. Break status
-16. Fortify readiness
+13. Upstream Frame Dependencies
+14. Decisions / Inputs Needed From Others
+15. Accepted risks
+16. Break status
+17. Fortify readiness
+
+### Upstream Frame Dependencies
+
+When a Frame Brief was supplied with unresolved conditions or blocking input, record:
+* **FQ ID**
+* **Question / missing input**
+* **Why it affects Break**
+* **Break areas affected**
+* **Status**
+
+Do not duplicate the full Frame Question Register; include only upstream items that materially constrain Break.
 
 ### Decisions / Inputs Needed From Others
 
-For each Deferred or Open material finding that requires external input, record:
+For each Deferred Blocker or Major concern that requires external input, record:
 * **BF ID**
 * **Finding**
 * **Decision or input needed**
@@ -246,7 +282,7 @@ For each Deferred or Open material finding that requires external input, record:
 * **Recommended response**
 * **Suggested respondent** — role or team when reasonably inferable; otherwise `To be identified`
 * **Fortify blocking?** — Blocking or Non-blocking
-* **Status** — Deferred, Open, or Resolved
+* **Status** — Deferred or Resolved
 * **Answer / decision** — blank until supplied
 
 When useful, group unresolved items by likely respondent so the user can directly copy them into email, chat, meeting notes, or another stakeholder handoff.
@@ -272,24 +308,24 @@ Break completion and Fortify readiness are separate concepts.
 ### Break Status
 
 Use:
-* **Complete** — every major stated objective has been stress-tested, every material weakness is recorded and prioritized, every Blocker / Major concern has a recommended response, and every material finding has a disposition
-* **In Progress** — material failure analysis or finding disposition is still incomplete
+* **Complete** — every major stated objective has been stress-tested, every material weakness is recorded and prioritized, every Blocker / Major concern has a recommended response and terminal disposition, and no upstream Frame dependency prevents required material analysis
+* **In Progress** — material failure analysis remains incomplete, a Blocker/Major concern remains Open, or upstream Frame ambiguity prevents required objectives from being fully stress-tested
 
-Deferred findings do **not** prevent Break Status from becoming Complete.
+Deferred findings do **not** prevent Break Status from becoming Complete when the analysis itself is otherwise complete.
 
 ### Fortify Readiness
 
 Use exactly one of:
 
 * **Ready for Fortify** — no unresolved decision or external input materially prevents strengthening the artifact; Blockers have a selected treatment or are explicitly accepted risks
-* **Ready for Fortify with Conditions** — unresolved or deferred items remain, but Fortify can still strengthen the artifact safely under clearly stated conditions
-* **Awaiting External Input** — one or more Deferred or Open findings materially affect which treatment Fortify should implement or whether strengthening can proceed reliably
+* **Ready for Fortify with Conditions** — deferred items remain, but Fortify can still strengthen the artifact safely under clearly stated conditions
+* **Awaiting External Input** — one or more Deferred findings materially affect which treatment Fortify should implement or whether strengthening can proceed reliably
 
 For **Ready for Fortify with Conditions**, list the applicable `BF-###` IDs and conditions.
 
 For **Awaiting External Input**, list the blocking `BF-###` IDs and the decision or information required.
 
-Do not label the entire Break analysis incomplete merely because another stakeholder still owes a decision or answer.
+If Break Status is **In Progress**, do not report the artifact as fully Ready for Fortify.
 
 ---
 
@@ -300,14 +336,16 @@ Break is complete when:
 * Material failure paths and propagation chains have been explored
 * Every material weakness is recorded, supported with reasoning or evidence, and prioritized
 * Every Blocker and Major concern has a recommended response and trade-off
-* Every material Blocker and Major concern has a disposition: Accepted recommendation, Alternative selected, Accepted risk, Deferred, or Open
-* Deferred and Open external items are captured under **Decisions / Inputs Needed From Others**
+* Every Blocker and Major concern has a terminal disposition: Accepted recommendation, Alternative selected, Accepted risk, or Deferred
+* No Blocker or Major concern remains Open
+* Deferred external items are captured under **Decisions / Inputs Needed From Others**
 * Accepted risks are explicitly preserved as residual exposure
+* Upstream Frame dependencies no longer prevent required material analysis
 * Fortify readiness is calculated separately from Break completion
 
 Break does **not** require the current user to personally make every decision before the Break Report can be completed.
 
-A completed Break Report may legitimately end with **Awaiting External Input** when material decisions or evidence have been identified and routed for follow-up.
+A completed Break Report may legitimately end with **Awaiting External Input** when material treatment decisions or evidence have been identified and routed for follow-up.
 
 When those answers or decisions become available, the user can run Break again on the existing Break Report. Break must resume from the saved `BF-###` state, incorporate the new information, selectively re-test affected failure paths, and recalculate Fortify readiness without restarting completed work.
 

@@ -10,6 +10,8 @@ A core operating rule is:
 
 Frame and Break separate analytical completion from downstream readiness. They can identify the exact missing question, weakness, treatment decision, or risk while routing unresolved items to the stakeholder who actually owns the answer.
 
+Fortify adds another control: the PM should be able to see and validate the **reliable sources used as the basis for strengthening** rather than accepting an AI-selected framework invisibly.
+
 ---
 
 ## 1. Validate the Plan Before Challenging It — `/frame`
@@ -206,7 +208,72 @@ Direct mode is useful for a fast improvement pass, but it is not equivalent to t
 
 ---
 
-## 6. Choose Controls by Failure Mechanism, Not by Label
+## 6. Choose the Source Basis Before Fortifying
+
+Fortify should not silently decide which framework or methodology becomes the foundation of the strengthened plan.
+
+Before material externally grounded recommendations are generated, Fortify asks how you want to establish the source basis.
+
+### Option A — Provide approved sources
+
+Upload files or share links to references you already trust, such as:
+
+* approved internal PPMs or playbooks;
+* internal policies or standards;
+* industry standards;
+* recognized methodologies or frameworks;
+* peer-reviewed scientific studies or systematic reviews;
+* official guidance from professional or regulatory bodies; or
+* first-party reference documentation.
+
+Fortify reads these sources, records their applicability and limitations, and treats explicitly approved references as **User Approved**.
+
+### Option B — Ask Fortify to search
+
+Fortify searches for strong candidate sources, prioritizing:
+
+1. governing requirements and official standards;
+2. primary institutional frameworks and methodologies;
+3. peer-reviewed studies and systematic reviews;
+4. authoritative first-party documentation; and
+5. credible secondary sources only when stronger primary material is unavailable.
+
+Fortify then shows a concise candidate set before relying on it.
+
+Example:
+
+```text
+Candidate Source 1
+PMI Standard for Project Management
+Type: Professional standard
+Supports: Governance and decision-rights theme
+Why applicable: Provides formal governance and accountability concepts
+Limitation: Must be adapted to the organization's operating model
+Status: Candidate — Awaiting User Validation
+```
+
+You can approve all, approve selected sources, reject a source, or ask Fortify to search for alternatives.
+
+### Option C — Hybrid
+
+Use your approved documents first, then let Fortify search only where the supplied references do not adequately cover a Break theme.
+
+### Source statuses
+
+Fortify keeps a **Source Register** with statuses such as:
+
+* **Governing** — binding law, regulation, contract, or mandatory policy;
+* **User Approved** — accepted as part of the design basis;
+* **Candidate — Awaiting User Validation** — found by Fortify but not yet approved for use as the material basis; or
+* **Rejected** — considered but intentionally not used.
+
+The user-validation requirement applies to material frameworks, methodologies, standards, studies, or references used as the basis of a recommendation. Fortify does not need approval for every incidental factual citation.
+
+Binding requirements are different: a law, regulation, contract, or mandatory policy is not made optional merely because it is not the PM's preferred methodology. Fortify should surface it as a **Governing** constraint and allow the user to validate applicability or interpretation.
+
+---
+
+## 7. Choose Controls by Failure Mechanism, Not by Label
 
 Break severity tells Fortify **how much protection is justified**. It does not automatically dictate the type of control.
 
@@ -239,7 +306,7 @@ Optionality and learning loops should also be used where they materially improve
 
 ---
 
-## 7. Practical End-to-End Example
+## 8. Practical End-to-End Example
 
 A project plan assumes an external team will approve production deployment.
 
@@ -284,9 +351,23 @@ BF-006: Delegated approval approved for predefined low-risk releases.
 
 Break selectively re-tests the approval failure path and becomes **Ready for Fortify**.
 
-### Fortify
+### Fortify — select the evidence basis
 
-Fortify incorporates:
+Fortify asks:
+
+```text
+How should I ground the strengthening recommendations?
+
+A. I will upload/share approved sources
+B. Search for reliable candidate sources and let me validate them
+C. Hybrid — use my sources first, then search for gaps
+```
+
+The PM chooses **B**.
+
+Fortify searches and proposes suitable governance/decision-rights references. The PM validates the sources that are appropriate for the organization.
+
+Fortify then incorporates:
 
 * delegated authority rules;
 * eligibility criteria for delegated approval;
@@ -294,7 +375,7 @@ Fortify incorporates:
 * evidence/validation for the new control; and
 * any useful contingency or learning mechanism.
 
-The final change remains traceable back to `BF-006` and the upstream `FQ-004` context.
+The final change remains traceable back to `BF-006`, the upstream `FQ-004` context, and the **User Approved** source basis.
 
 ---
 
@@ -314,12 +395,19 @@ The final change remains traceable back to `BF-006` and the upstream `FQ-004` co
 * **Ready for Fortify with Conditions** — Fortify can proceed under explicit `BF-###` conditions.
 * **Awaiting External Input** — external input materially determines treatment direction.
 
+### Fortify source grounding
+
+* **Governing** — mandatory source or constraint.
+* **User Approved** — accepted design-basis source.
+* **Candidate — Awaiting User Validation** — AI-found source not yet approved as the material basis.
+* **Rejected** — considered but not used.
+
 ---
 
 ## Mental Models
 
 1. **FRAME — First principles and steel-manning**: reconstruct the strongest accurate version of the plan from evidence, assumptions, and explicit decisions.
 2. **BREAK — Inversion and falsifiability**: attempt to prove the plan wrong before reality does.
-3. **FORTIFY — Margin of safety and adaptive design**: build controls proportional to the actual failure mechanism and preserve useful options and learning where they improve resilience.
+3. **FORTIFY — Evidence-grounded margin of safety and adaptive design**: select a reliable, validated source basis; build controls proportional to the actual failure mechanism; and preserve useful options and learning where they improve resilience.
 
-The result is not a PM who knows every answer. It is a PM who can reliably distinguish **what is known, what can fail, who must decide, and what must change next**.
+The result is not a PM who knows every answer. It is a PM who can reliably distinguish **what is known, what can fail, who must decide, which evidence is trusted, and what must change next**.

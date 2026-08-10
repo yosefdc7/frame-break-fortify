@@ -36,10 +36,12 @@ Frame must distinguish between:
 
 Discovering the exact question, why it matters, and who is likely to know the answer is a successful Frame outcome even when the current user cannot answer it immediately.
 
-Frame therefore never forces the user to personally resolve every gap. A material question may be:
-* **Answered** — resolved during the current review
+A material Frame question may be:
+* **Open** — transient; currently unresolved and not yet dispositioned
+* **Answered** — resolved during the current review or a later resume
 * **Deferred** — explicitly saved for another person or team
-* **Open** — unresolved and not yet routed
+
+`Open` is not a terminal disposition. A material question must become **Answered** or **Deferred** before Frame Status can become Complete.
 
 A deferred question is not just an Unknown. It is a known information need with a clear question and a disposition.
 
@@ -58,7 +60,7 @@ A deferred question is not just an Unknown. It is a known information need with 
 
 ## Process
 
-Withhold critique. Focus strictly on reconstruction, clarification, and establishing truth.
+Withhold critique. Focus strictly on reconstruction, clarification, and establishing truth. Frame should expose what the plan says and what remains unknown; Break is responsible for adversarial failure testing.
 
 ### Step 1 — Establish Intent
 Determine:
@@ -75,7 +77,7 @@ Map:
 
 `Inputs → assumptions → activities → dependencies → decisions → outputs → outcomes → measures of success`
 
-Expose broken or missing links, but do not yet redesign the artifact.
+Expose broken or missing links, but do not redesign or stress-test the artifact.
 
 ### Step 3 — Establish Evidence
 Classify important statements as Verified, Supported, Inferred, Assumed, or Unknown.
@@ -101,7 +103,7 @@ Assess every Frame dimension, but only create interview questions for gaps that 
 Do not manufacture questions simply to satisfy coverage.
 
 ### Step 5 — Produce the Frame Brief
-Generate an Antigravity Artifact containing:
+Generate a persistent Frame Brief containing:
 
 1. Executive interpretation
 2. Intended outcomes
@@ -111,31 +113,45 @@ Generate an Antigravity Artifact containing:
 6. Evidence ledger
 7. Unknowns
 8. Decisions requiring confirmation
-9. Questions for Others
-10. Potential contradictions
-11. Frame status
-12. Readiness for Break
+9. Question Register
+10. Questions for Others
+11. Potential contradictions
+12. Frame status
+13. Readiness for Break
 
-#### Questions for Others
+#### Question Register
 
-Every material unanswered question that is deferred must receive a stable ID using the format `FQ-###`.
+Every material interview question receives a stable ID using the format `FQ-###` from the moment it is first asked, regardless of whether it is answered immediately or deferred.
 
 Do not renumber existing IDs when the Frame Brief is updated.
 
-For each deferred question record:
+For every material question record:
 * **ID**
 * **Question**
 * **Why it matters**
+* **Status** — Open, Answered, or Deferred
+* **Answer** — when supplied
+* **Blocking?** — Blocking or Non-blocking while unresolved
 * **Suggested respondent** — role or team when reasonably inferable; otherwise `To be identified`
-* **Blocking?** — Blocking or Non-blocking
-* **Status** — Deferred, Open, or Answered
+
+The Question Register is the canonical question history. Answered questions remain in it for traceability.
+
+#### Questions for Others
+
+This is a filtered handoff view of the Question Register containing only questions currently marked **Deferred**.
+
+For each deferred question include:
+* **FQ ID**
+* **Question**
+* **Why it matters**
+* **Suggested respondent**
+* **Blocking?**
+* **Status**
 * **Answer** — blank until supplied
 
-Prefer respondent roles over invented names.
+Group unresolved questions by likely respondent when useful so the user can directly copy them into email, chat, meeting notes, or another handoff.
 
-At the end of the section, group unresolved questions by likely respondent when useful so the user can directly copy the questions into email, chat, meeting notes, or another handoff.
-
-Do not require due dates unless the source artifact or user explicitly provides them.
+Prefer respondent roles over invented names. Do not require due dates unless the source artifact or user explicitly provides them.
 
 ### Step 6 — Grill to Readiness
 
@@ -143,19 +159,24 @@ If material gaps remain, initiate a structured interview with the user.
 
 Present questions **one at a time**.
 
-Each question must have a stable `FQ-###` ID from the moment it is first asked.
+Each material question must receive a stable `FQ-###` ID and enter the Question Register before it is presented.
 
 For every material question:
-* Generate a specific, answerable question.
+* Generate a specific, answerable clarification question.
 * When there are genuine resolution choices, present structured **A / B / C** options representing distinct paths.
 * Each option should explain the approach, risk posture, and trade-offs.
-* Mark one option as **(recommended)** when Frame has enough evidence to recommend one.
+* Mark one option as **(recommended)** only when Frame has enough evidence to recommend one without crossing into adversarial redesign.
 * Always allow the user to provide a custom answer.
 * Always provide an additional path: **D. Ask someone else / save this question**.
 
+When the user answers:
+1. Mark the question **Answered**.
+2. Record the answer in the Question Register.
+3. Update affected assumptions, evidence, dependencies, decisions, unknowns, and readiness.
+
 When the user chooses D, says they do not know, or asks to save the question for another person:
 1. Mark the question **Deferred**.
-2. Record it under **Questions for Others**.
+2. Keep it in the Question Register and surface it under **Questions for Others**.
 3. Infer the likely respondent role only when reasonably clear.
 4. Classify it as Blocking or Non-blocking.
 5. Do not ask another question merely to identify the respondent unless respondent ownership itself is materially necessary.
@@ -167,7 +188,9 @@ Prefer qualitative assessments over invented numbers or dates. If a timeline is 
 
 **Research-first rule**: Exhaust reasonably available codebase, document, internal-source, and authoritative external research before asking the user a factual question that can be established independently.
 
-**Coverage rule**: Assess Intent, Logic, Evidence, Ambiguity, Dependencies, and Decisions. If a section has no material gaps, note that internally and move on. Question only material unresolved gaps.
+**Coverage rule**: Assess Intent, Logic, Evidence, Ambiguity, Dependencies, and Decisions. If a section has no material gaps, move on. Question only material unresolved gaps.
+
+**Role-boundary rule**: Frame may clarify assumptions, dependencies, decision rights, and evidence requirements, but must not run premortems, inversion, kill-condition analysis, worst-case failure analysis, or other adversarial stress tests reserved for Break.
 
 **Escalation trigger**: If the same gap repeatedly reappears without becoming more answerable, flag it as a **structural ambiguity**. Structural ambiguity may require reframing the artifact's scope rather than asking more variants of the same question.
 
@@ -175,7 +198,7 @@ For probing question patterns, see `references/grill-questions.md`.
 
 As the user answers or defers questions, update the Frame Brief in real time.
 
-The interview ends when every material question has a disposition: **Answered, Deferred, or Open**.
+The interview ends when every material question is **Answered** or **Deferred**. A material question left **Open** means the Frame review remains In Progress.
 
 ---
 
@@ -184,8 +207,8 @@ The interview ends when every material question has a disposition: **Answered, D
 When Frame receives an existing Frame Brief, treat it as a continuation of prior work rather than automatically starting a new review.
 
 On resume:
-1. Preserve all existing `FQ-###` IDs.
-2. Inspect **Questions for Others** first.
+1. Preserve all existing `FQ-###` IDs and Question Register entries.
+2. Inspect **Questions for Others** and any Open questions first.
 3. Detect newly supplied answers from the user or updated artifact.
 4. Close resolved questions by changing their status to **Answered** and recording the answer.
 5. Reclassify any affected assumptions, evidence, unknowns, dependencies, decisions, contradictions, and success criteria.
@@ -209,8 +232,8 @@ Frame completion and Break readiness are separate concepts.
 ### Frame Status
 
 Use:
-* **Complete** — every material element is represented as evidence, assumption, inference, decision, unknown, or an explicit question with a disposition.
-* **In Progress** — material gaps have not yet been reconstructed or dispositioned.
+* **Complete** — every material element is represented as evidence, assumption, inference, decision, unknown, or a material question that is Answered or Deferred; no material question remains Open
+* **In Progress** — material reconstruction is incomplete or at least one material question remains Open
 
 Deferred questions do **not** prevent Frame Status from becoming Complete.
 
@@ -218,11 +241,13 @@ Deferred questions do **not** prevent Frame Status from becoming Complete.
 
 Use exactly one of:
 
-* **Ready for Break** — no material blocking questions remain.
-* **Ready for Break with Conditions** — unresolved questions remain, but they do not prevent meaningful stress-testing. Clearly list the conditions.
-* **Awaiting External Input** — one or more deferred or open questions materially prevent reliable stress-testing. List the blocking question IDs.
+* **Ready for Break** — no material blocking deferred questions remain.
+* **Ready for Break with Conditions** — unresolved deferred questions remain, but they do not prevent meaningful stress-testing. Clearly list the conditions and `FQ-###` IDs.
+* **Awaiting External Input** — one or more deferred questions materially prevent reliable stress-testing. List the blocking `FQ-###` IDs.
 
-Do not label the entire Frame review incomplete merely because another stakeholder still owes an answer.
+If Frame Status is **In Progress**, do not report the artifact as Ready for Break.
+
+Do not label the entire Frame review incomplete merely because another stakeholder still owes an answer; route the question as Deferred instead.
 
 ---
 
@@ -237,14 +262,13 @@ Frame is complete when every material element of the artifact can be represented
 * Explicitly acknowledged Unknown
 * Answered question
 * Deferred question
-* Open question
 
-Every material unanswered question must have a clear disposition.
+Every material interview question must have a terminal disposition: **Answered** or **Deferred**. `Open` is transient and prevents completion.
 
 Frame does **not** require the current user to personally obtain every answer before producing the Frame Brief.
 
 A completed Frame Brief may legitimately end with **Awaiting External Input** when blocking questions have been identified and routed for follow-up.
 
-When those answers become available, the user can run Frame again on the existing Frame Brief. Frame must resume from the saved question state, incorporate the new answers, and recalculate readiness without restarting the review.
+When those answers become available, the user can run Frame again on the existing Frame Brief. Frame must resume from the saved Question Register, incorporate the new answers, and recalculate readiness without restarting the review.
 
-The goal is not to eliminate every unknown immediately. The goal is to make every material unknown explicit, answerable, owned or routed, and safe to resume later.
+The goal is not to eliminate every unknown immediately. The goal is to make every material unknown explicit, answerable, routed when necessary, and safe to resume later.

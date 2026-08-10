@@ -226,6 +226,7 @@ See `skills/*/references/evidence-contract.md`.
 ## Repository Structure
 
 ```text
+CHANGELOG.md
 skills/
   frame/    SKILL.md + references/
   break/    SKILL.md + references/
@@ -243,7 +244,7 @@ git clone https://github.com/yosefdc7/frame-break-fortify.git
 
 Copy or symlink the folders under `skills/` into your agent's skills directory.
 
-See `docs/INSTRUCTIONS_PM.md` for a practical PM workflow.
+See `docs/INSTRUCTIONS_PM.md` for a practical PM workflow. See [`CHANGELOG.md`](CHANGELOG.md) for notable changes and unreleased work.
 
 ---
 

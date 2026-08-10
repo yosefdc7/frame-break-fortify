@@ -16,7 +16,17 @@ The system optimizes for **process predictability rather than identical answers*
 | **Break** | Adversary | *How would this plan fail in the hands of reality?* |
 | **Fortify** | Engineer | *How do we make it survive — and get stronger from — the failures we found?* |
 
-Frame reconstructs the artifact, researches what it can establish independently, and interviews the user only for material unresolved gaps. A question can be **answered now, deferred to someone else, or resumed later**. Frame can therefore complete its reconstruction even when external stakeholder input is still outstanding. Break continues the adversarial interview when human judgment is required. Fortify is an **engineer, not a compiler** — it adds controls, contingencies, and design principles the original plan never contained, grounded in external knowledge.
+Frame reconstructs the artifact, researches what it can establish independently, and interviews the user only for material unresolved gaps. A question can be **answered now, deferred to someone else, or resumed later**. Frame can therefore complete its reconstruction even when external stakeholder input is still outstanding.
+
+Break stress-tests the reconstructed system and turns material weaknesses into explicit `BF-###` findings. A finding can be **treated now, handled through an alternative, explicitly accepted as risk, deferred to someone else, or resumed later**. Break analysis can therefore complete without forcing the current user to make every decision personally.
+
+Fortify is an **engineer, not a compiler** — it adds controls, contingencies, and design principles the original plan never contained, grounded in external knowledge.
+
+The core workflow principle is:
+
+> **Skill completion and downstream readiness are separate concepts.**
+
+A skill can finish its analytical work while clearly recording what external input is still required before the next stage can proceed reliably.
 
 ---
 
@@ -49,10 +59,24 @@ Frame reconstructs the artifact, researches what it can establish independently,
                     │  /break                      │
                     │  premortem, inversion,       │
                     │  dependency attacks          │
-                    │  → Grill to Readiness        │
-                    │    (A/B/C decision menus)    │
+                    │  → BF-### findings           │
+                    │    resolve / accept risk /    │
+                    │    defer to someone else     │
                     └──────────────┬───────────────┘
                                    ▼  Break Report
+                         ┌─────────┴─────────┐
+                         │                   │
+                         ▼                   ▼
+                  Ready for Fortify   Awaiting External Input
+                         │                   │
+                         │          BF-### decisions routed
+                         │                   │
+                         │          answers obtained later
+                         │                   │
+                         │          /break existing report
+                         │                   │
+                         └─────────┬─────────┘
+                                   ▼
                     ┌──────────────────────────────┐
                     │  /fortify                    │
                     │  margin of safety +          │
@@ -102,19 +126,37 @@ Frame incorporates the answer into the existing brief, closes `FQ-003`, updates 
 
 ### `/break` — Expose the weakness
 
-Attempts to make the proposed system fail before reality does. Adversarial analysis without becoming contrarian for its own sake.
+Attempts to make the proposed system fail before reality does. Adversarial analysis without becoming contrarian for its own sake, while making treatment decisions explicit and resumable.
 
 * **Premortem** — "It is six months later and this initiative failed badly" — works backward to generate specific, contextual failure chains rather than generic risks.
 * **Inversion** — what conditions would almost guarantee failure? The inverse exposes design requirements that may be absent.
 * **Dependency attacks** — stress across people, process, technology, governance, sequencing, capacity, data, suppliers, handoffs, communications, adoption, controls, timeline, decision rights. Looks for failure *propagation*, not merely isolated risks.
 * **Scenario testing** — expected, adverse, extreme-but-plausible, edge case, dependency failure, human-behavior failure.
-* **Break Report** — failure thesis, top failure paths, fragile assumptions, missing controls, contradictions, edge cases — findings prioritized as **Blocker / Major concern / Watch item / Observation**, each with a recommended response, trade-off, and decision owner.
-* **Grill to Readiness** — blockers and decisions requiring human judgment are interviewed one at a time until the report is *Ready to strengthen*.
+* **Stable `BF-###` IDs** — every material Break finding receives a persistent identifier for traceability, stakeholder decisions, and later resumption.
+* **Recommend before asking** — every Blocker and Major concern receives a recommended response, reasoning/evidence, failure scenario, trade-off, decision owner when known, disposition, and whether it blocks Fortify.
+* **Resolve / accept / defer** — material findings may be resolved through the recommendation, handled through an alternative, explicitly accepted as risk, deferred to another person/team, or left Open. When choices exist, Break may use A/B/C paths plus **D. Ask someone else / save this decision**.
+* **Explicit risk acceptance** — legitimate risks may be consciously accepted with rationale, residual exposure, and decision owner when known. Risk acceptance is never treated as a substitute for non-waivable legal, regulatory, safety, or contractual obligations.
+* **Decisions / Inputs Needed From Others** — unresolved external decisions are captured with the `BF-###` ID, finding, decision/input needed, why it matters, recommended response, suggested respondent, Fortify-blocking classification, and eventual answer.
+* **Resume later** — running `/break` on an existing Break Report preserves finding IDs, incorporates stakeholder decisions or evidence, selectively re-tests affected failure paths, and recalculates Fortify readiness instead of restarting the whole adversarial analysis.
+* **Break Report** — failure thesis, top failure paths, fragile assumptions, missing controls, dependency failures, contradictions, edge cases, Blockers, Major concerns, Watch items, recommended responses, external decisions/inputs, accepted risks, Break status, and Fortify readiness.
+* **Separate completion from readiness** — Break can be **Complete** even when external decisions are outstanding. Fortify readiness is reported separately as:
+  * **Ready for Fortify** — no unresolved decision or input materially prevents strengthening the artifact; Blockers have a selected treatment or are explicitly accepted risks.
+  * **Ready for Fortify with Conditions** — unresolved/deferred items remain, but Fortify can safely proceed under stated conditions.
+  * **Awaiting External Input** — one or more deferred/open findings materially affect which treatment Fortify should implement or whether strengthening can proceed reliably.
 
 ```
 /break <document>
 /break FRAME-REVIEW.md
+/break <existing Break Report>
 ```
+
+Example continuation:
+
+```
+BF-003: Sponsor approved delegated approval authority.
+```
+
+Break incorporates the decision, updates the finding disposition, selectively re-tests affected scenarios or dependencies, and recalculates Fortify readiness.
 
 ### `/fortify` — Build the margin of safety
 
@@ -166,12 +208,16 @@ See `skills/*/references/evidence-contract.md` for the full contract.
 
 | You bring | Frame produces | Break produces | Fortify produces |
 |---|---|---|---|
-| A draft plan | Frame Brief (intent, evidence, gaps, deferred questions) | Break Report (failure paths, priorities) | Targeted Recommendations + Strengthened Artifact |
-| A playbook | Reconstructed logic + assumptions + routed questions | Fragile assumptions + missing controls | Margin of safety controls + contingencies |
-| A change-management strategy | Stakeholder map + decision register + external questions | Premortem chains + contradiction analysis | Optionality + learning loops per theme |
-| A governance document | Evidence ledger + ambiguity list + Questions for Others | Edge cases + dependency failures | Graceful degradation paths + scorecards |
+| A draft plan | Frame Brief (intent, evidence, gaps, deferred questions) | Break Report (failure paths, priorities, routed decisions) | Targeted Recommendations + Strengthened Artifact |
+| A playbook | Reconstructed logic + assumptions + routed questions | Fragile assumptions + missing controls + accepted/deferred treatments | Margin of safety controls + contingencies |
+| A change-management strategy | Stakeholder map + decision register + external questions | Premortem chains + contradiction analysis + decision handoffs | Optionality + learning loops per theme |
+| A governance document | Evidence ledger + ambiguity list + Questions for Others | Edge cases + dependency failures + accepted risks | Graceful degradation paths + scorecards |
 
-Frame interviews the user when it finds material gaps, but does not require the current user to personally resolve every question. Deferred questions become explicit stakeholder follow-ups and can be resumed later. Break stress-tests once the Frame Brief is sufficiently ready. Fortify flags decisions it cannot make for you as **Decision Required** — it proceeds with the recommendation and lets you choose.
+Frame interviews the user when it finds material gaps, but does not require the current user to personally resolve every question. Deferred questions become explicit stakeholder follow-ups and can be resumed later.
+
+Break does the same for treatment decisions: it always exposes the weakness and recommends a response first, but it can record accepted risk or route a decision/input to another stakeholder instead of forcing the current user to decide. Deferred findings remain traceable through their `BF-###` IDs and can be resumed later.
+
+Fortify uses the resulting Break findings and decisions as engineering inputs. If a recommendation still requires a decision the user has not made, Fortify flags it as **Decision Required** rather than silently inventing the answer.
 
 ---
 

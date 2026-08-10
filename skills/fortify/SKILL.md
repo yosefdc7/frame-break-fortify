@@ -1,6 +1,6 @@
 ---
 name: fortify
-description: Strengthen a plan by building margin of safety and antifragility into it, grounded in user-approved reliable sources and external knowledge. Use after Break identifies weaknesses and the Break Report is sufficiently ready for treatment, or directly on a document with clearly labeled provisional weaknesses.
+description: Strengthen a plan using reliable, user-validated source grounding, margin of safety, and adaptive controls. Use after Break, or directly with clearly labeled provisional weaknesses.
 license: MIT
 metadata:
   version: "0.2.0"
@@ -8,80 +8,56 @@ metadata:
 
 # Fortify Skill
 
-**Mission**: Actively strengthen the plan by building **margin of safety** and **antifragility** into it using reliable, context-fit evidence that the user can review and approve as the basis for recommendations. Fortify is an engineer, not a compiler — it adds controls, contingencies, and design principles that the original plan and Break findings do not already contain.
+**Mission**: Strengthen the artifact using controls and design choices that fit the actual weakness and are grounded in reliable, context-fit evidence when material external guidance is needed.
 
-Fortify has two supported modes:
+Fortify has two modes:
 
-1. **Break-backed mode** — preferred. Use a Break Report as the weakness model and preserve its `BF-###` traceability and readiness conditions.
-2. **Direct mode** — allowed when no Break Report exists. Fortify identifies provisional weaknesses directly from the document, clearly states that no formal Break analysis was performed, and does not invent `BF-###` IDs.
+1. **Break-backed mode** — preferred. Use the Break Report as the weakness model and preserve `BF-###` traceability.
+2. **Direct mode** — allowed when no Break Report exists. Identify provisional weaknesses directly from the document and do not pretend a formal Break analysis occurred.
 
-When a Break Report is supplied, respect its **Fortify readiness** status before deciding how far Fortify can proceed. Never silently override a deferred Break decision or invent the answer to a blocking `BF-###` finding.
-
-**Triggers**: `/fortify <document>` or `/fortify <document> BREAK-REVIEW.md`
-
----
-
-## The Evidence Contract (Summary)
-
-* **Evidence Hierarchy**: Prefer governing laws, regulations, contractual requirements, approved organizational policies, official standards, first-party frameworks, peer-reviewed research, and other authoritative sources over unsupported common practice.
-* **Claim Classification**: Distinguish between Verified, Supported, Inferred, Assumed, and Unknown claims.
-* **Source Fit**: Only apply external frameworks or research if they meaningfully apply to the artifact, domain, jurisdiction, and weakness being treated.
-* **Citation Rule**: Identify sources for recommendations grounded in external standards, frameworks, research, regulation, or recognized methodology.
-* **User Validation Rule**: Sources discovered by Fortify are **candidates** until the user validates them for use as the design basis. Do not silently convert a searched source into an approved basis.
-
-*(For full details, see `references/evidence-contract.md`)*
+**Triggers**:
+* `/fortify <document>`
+* `/fortify <document> BREAK-REVIEW.md`
+* `/fortify <existing Fortify artifact>` to resume source validation or unfinished work
 
 ---
 
-## Source Grounding Principle
+## Evidence Rules
 
-Fortify should distinguish between:
+Follow `references/evidence-contract.md`.
 
-1. **Governing constraints** — laws, regulations, contractual requirements, mandatory policies, or other non-waivable obligations that apply to the artifact; and
-2. **Selected design basis** — frameworks, approved PPMs/playbooks, scientific studies, standards, methodologies, or recognized practices chosen to guide strengthening decisions.
-
-The user may supply the selected design basis directly, or ask Fortify to search for candidate sources.
-
-Examples of useful source types include:
-* Approved internal PPMs, playbooks, policies, standards, or reference implementations
-* Official industry standards and specifications
-* Recognized project, risk, governance, change, quality, security, or engineering methodologies
-* Peer-reviewed scientific studies, systematic reviews, and evidence-based guidance
-* First-party documentation from authoritative institutions or vendors
-* Regulatory or legal requirements that govern the artifact
-
-Do not treat blogs, marketing pages, SEO summaries, or repeated common practice as strong design authority when better primary sources exist.
+Important Fortify rules:
+* Prefer governing requirements, approved internal references, official standards, primary institutional frameworks, peer-reviewed research, systematic reviews, and authoritative first-party documentation.
+* Source quality and user approval are different. User approval does not make a weak source reliable.
+* AI-found material design-basis sources remain candidates until the user approves their use.
+* Do not fabricate searched sources when search or retrieval tools are unavailable.
+* A reasoning-only recommendation must be labeled as reasoning-based and cannot be presented as an established industry standard or best practice.
 
 ---
 
 ## Core Concepts
 
 ### Margin of Safety
-Design beyond the minimum requirement so the plan can absorb unexpected stress.
 
-Break priority should influence the **strength** of the treatment, but it does not mechanically determine one mandatory control type.
+Break priority should influence the **strength** of treatment, but not mechanically dictate the control type.
 
-Use these as default heuristics, not fixed mappings:
+Common patterns:
 
-| Break Priority | Common starting pattern | Use when it fits the failure mechanism |
-|---|---|---|
-| **Blocker** | Strong structural protection, often **Redundancy** | The failure requires an independent backup path or elimination of a single point of failure |
-| **Major Concern** | Often a **Contingency Trigger** | The risk can be managed through an explicit trigger and pre-agreed response |
-| **Watch Item** | Often **Graceful Degradation** | Partial service or reduced scope can preserve value while the issue is contained |
-
-Other treatments may be more appropriate, including removing a prohibited design, changing sequencing, clarifying ownership, adding validation, reducing scope, changing architecture, or redesigning the process. Choose the treatment that directly addresses the actual failure mechanism.
-
-Never use redundancy, contingency triggers, or graceful degradation merely because the severity label suggests one.
-
-### Antifragility
-The plan gets stronger from stress, not just survives it. Two useful mechanisms:
-
-| Mechanism | What It Means |
+| Pattern | Best fit |
 |---|---|
-| **Optionality** | Preserve future options rather than locking in irreversible decisions. Frame decisions as "at [milestone], choose between X and Y based on [observable criteria]" when that genuinely improves the design. |
-| **Learning Loops** | Post-launch activity produces documented improvement: reviews, incidents, evidence, or metrics feed concrete changes into the next cycle. |
+| **Redundancy** | A single point of failure needs an independent backup |
+| **Contingency Trigger** | A known exposure can be managed through a trigger and pre-agreed response |
+| **Graceful Degradation** | Partial service or reduced scope can preserve value during failure |
+| **Redesign / removal** | The current design is prohibited, unsafe, or structurally wrong |
+| **Validation** | The main weakness is insufficient evidence or verification |
+| **Sequencing / scope change** | Exposure can be reduced by changing order or scope |
+| **Governance change** | The weakness is ownership, authority, escalation, or decision rights |
 
-Use these mechanisms when they fit the artifact. Do not force them into recommendations where they add ceremony without improving resilience.
+Choose the treatment that addresses the failure mechanism.
+
+### Adaptive Design
+
+Use optionality and learning loops when they materially improve resilience. Do not add them as ceremony.
 
 ---
 
@@ -91,201 +67,222 @@ Use these mechanisms when they fit the artifact. Do not force them into recommen
 
 #### Break-backed mode
 
-When a Break Report is provided, inspect **Fortify readiness** before strengthening the artifact.
-
+When a Break Report is supplied:
 * **Ready for Fortify** — proceed normally.
-* **Ready for Fortify with Conditions** — proceed while explicitly preserving the listed conditions. Do not strengthen the artifact in a way that assumes those conditions have already been resolved.
-* **Awaiting External Input** — identify the blocking `BF-###` findings first. Do not invent or silently choose the missing stakeholder decision. Fortify may still strengthen unaffected themes, but any recommendation or artifact section whose direction materially depends on a blocking finding must remain **Decision Required / Awaiting External Input** rather than being presented as final.
+* **Ready for Fortify with Conditions** — proceed while preserving the listed `BF-###` conditions.
+* **Awaiting External Input** — strengthen unaffected areas only. Keep treatment paths that depend on blocking `BF-###` decisions as **Decision Required / Awaiting External Input**.
+
+Never silently resolve or override a deferred Break decision.
 
 #### Direct mode
 
-When no Break Report is provided:
-1. State that **no formal Break analysis was supplied or performed**.
-2. Read the document for weaknesses that Fortify can responsibly strengthen directly, such as missing controls, unclear ownership, weak acceptance criteria, absent contingencies, fragile dependencies, or vague implementation language.
-3. Label these as **provisional weaknesses**, not Break findings.
-4. Group provisional weaknesses into strengthening themes.
-5. Do **not** create `BF-###` IDs or imply that premortem, inversion, scenario testing, or full adversarial analysis occurred.
-6. If the document is too ambiguous to strengthen responsibly, preserve the ambiguity as **Decision Required / External Input Needed** instead of silently deciding it.
+When no Break Report is supplied:
+1. State that no formal Break analysis was supplied or performed.
+2. Identify only weaknesses that can be responsibly inferred from the document.
+3. Label them **provisional weaknesses**.
+4. Do not create `BF-###` IDs or imply that premortem, inversion, or full adversarial testing occurred.
+5. Preserve material ambiguity as **Decision Required / External Input Needed** rather than silently deciding it.
 
-Direct mode should not recreate the entire Break skill inside Fortify. Its purpose is to allow useful strengthening when the user intentionally skips Break while keeping the missing adversarial step explicit.
+---
 
-### Step 1 — Establish the Source Grounding Path
+### Step 1 — Choose the Source Path
 
-Before generating material externally grounded recommendations, ask the user how they want Fortify to establish the design basis.
+Before material externally grounded recommendations are finalized, ask:
 
-Offer these paths:
+* **A. Provide sources** — the user uploads files or shares links to approved PPMs/playbooks, policies, frameworks, standards, methodologies, scientific studies, or other trusted references.
+* **B. Search for candidates** — Fortify finds strong candidate sources and presents them for user validation.
+* **C. Hybrid** — use supplied sources first, then search for gaps.
 
-* **A. I will provide the sources** — ask the user to upload files or share links to approved PPMs/playbooks, frameworks, standards, methodologies, scientific studies, policies, or other trusted references.
-* **B. Search for candidate sources for me** — Fortify searches for high-quality sources that fit the artifact and weaknesses, then presents them for user validation before treating them as the selected design basis.
-* **C. Hybrid** — use sources supplied by the user first, then search only for gaps or additional corroboration.
+The user may request a **reasoning-only** pass. Reasoning-only material recommendations are **provisional** until adequately grounded; they cannot support a fully `Ready` final verdict when external grounding is materially needed.
 
-The user may also explicitly request a reasoning-only pass. If so, label those recommendations **Reasoning-only / Not externally grounded** and do not present them as established best practice.
+If reliable search/retrieval tools are unavailable, do not invent sources. Ask the user to upload or share references instead.
 
-#### User-provided sources
+---
 
-When the user supplies files or links:
-1. Read the relevant material before using it.
-2. Determine source type, authority, applicability, and any important scope limitations.
-3. Add it to the **Source Register**.
-4. Treat explicit user-provided approved references as **User Approved** unless the user says they are only exploratory.
-5. Flag material conflicts between supplied sources rather than silently choosing one.
+### Step 2 — Maintain a Lean Source Register
 
-#### AI-searched sources
+Every material source receives a stable `FS-###` ID. Preserve IDs when Fortify resumes.
 
-When the user asks Fortify to search:
-1. Search the strongest applicable source classes first: governing sources, official standards, primary institutional frameworks, peer-reviewed research, systematic reviews, and authoritative first-party documentation.
-2. Prefer primary sources over summaries.
-3. Produce a concise **Candidate Source Set** before using the sources as the design basis.
-4. For each candidate include:
-   * Source / issuing body
-   * Source type
-   * What weakness or theme it may support
-   * Why it appears applicable
-   * Important limitation or scope note
-   * Proposed status: `Candidate — Awaiting User Validation`
-5. Ask the user which candidates are acceptable to use. The user may approve all, approve selected sources, reject sources, or ask for alternatives.
-6. Only sources validated by the user become **User Approved** design-basis sources.
+For each source record:
+* **FS ID**
+* **Source**
+* **Supports** — relevant `BF-###`, theme, or Direct-mode weakness
+* **Quality** — `Governing`, `Reliable`, `Supporting`, or `Weak`
+* **Use** — `Approved`, `Candidate`, or `Rejected`
+* **Applicability / limitation** — one concise note when material
 
-Do not force the user to validate each individual citation used only for factual background. Validation is required for the **material framework, methodology, study, standard, or reference used as the basis for a Fortify recommendation**.
+Use these meanings:
+* **Governing** — binding law, regulation, contract, or mandatory policy that applies.
+* **Reliable** — strong, context-fit primary or high-quality evidence suitable as a material design basis.
+* **Supporting** — useful corroboration but not strong enough to be the sole basis for a material design choice.
+* **Weak** — poor authority, poor fit, or insufficient evidence; do not use as a material design basis.
 
-#### Governing constraints
+`Approved` means the user accepts using the source. It does **not** upgrade its Quality.
 
-If a law, regulation, binding contract, mandatory policy, or other non-waivable requirement clearly governs the artifact, surface it in the Source Register as **Governing**. User validation may confirm applicability or interpretation, but Fortify must not treat a binding requirement as optional merely because the user did not select it as a preferred framework.
+Material externally grounded recommendations should rely on:
+* applicable **Governing** sources; or
+* **Reliable + Approved** sources.
 
-### Step 2 — Preserve Intent
-Restate the agreed objective. Improvements must support that objective. Maintain the author's intent.
+Supporting sources may corroborate them.
 
-### Step 3 — Build Strengthening Themes
+#### When the user provides sources
+1. Read the relevant material.
+2. Assess Quality and applicability.
+3. Mark Use as `Approved` when the user clearly supplied it as an approved basis; otherwise `Candidate`.
+4. Flag material conflicts rather than silently choosing one.
 
-#### In Break-backed mode
-Group Break findings (Blockers, Major Concerns, Watch Items) into themes. A theme is a shared root cause or domain. Multiple findings that share a root cause may collapse into one theme. Preserve `BF-###` identifiers in the theme mapping.
+#### When Fortify searches
+1. Prefer primary and authoritative sources.
+2. Present a concise candidate set with `FS-###`, Quality, applicability, and limitation.
+3. Ask the user to approve selected sources, approve all suitable sources, reject sources, or request alternatives.
+4. Keep unapproved sources as `Candidate`.
 
-#### In Direct mode
-Group provisional weaknesses from the source document into themes. Keep them labeled as provisional and trace them back to the relevant source sections or requirements rather than assigning Break IDs.
+Do not require approval for every incidental factual citation; approval is for sources that materially drive the strengthening design.
+
+---
+
+### Step 3 — Preserve Intent and Build Themes
+
+Restate the agreed objective and preserve the author's intent.
+
+In Break-backed mode:
+* group related Break findings into strengthening themes;
+* preserve all relevant `BF-###` IDs.
+
+In Direct mode:
+* group provisional weaknesses into themes;
+* trace them to the source document rather than inventing Break IDs.
+
+---
 
 ### Step 4 — Generate Targeted Recommendations
-For each theme, produce a recommendation that:
-1. **Names the weakness**: cite the relevant `BF-###` finding(s) in Break-backed mode, or the source-document weakness in Direct mode.
-2. **Uses validated grounding**: rely primarily on Governing or User Approved sources from the Source Register for material design choices.
-3. **Cites the source**: name the framework, principle, standard, study, methodology, or governing source. Classify the grounding (Verified / Supported / Inferred).
-4. **Explains source fit**: state why the source meaningfully applies to this weakness and context rather than merely naming a famous framework.
-5. **Chooses the treatment by failure mechanism**: use redundancy, contingency triggers, graceful degradation, redesign, validation, scope change, sequencing change, governance change, or another control only when it meaningfully addresses the weakness.
-6. **Builds sufficient margin of safety**: stronger findings generally require stronger controls, but severity does not dictate a fixed control category.
-7. **Preserves optionality** where useful: state what future choices remain open.
-8. **Defines a learning loop** where useful: state how future evidence or stress improves the next cycle.
 
-If no validated source directly supports a material recommendation:
-* state that the recommendation is primarily reasoned from the artifact and available evidence;
-* classify it appropriately as Inferred or reasoning-based;
-* do not label it as an industry standard or best practice; and
-* when useful, offer to search for additional candidate sources before finalizing it.
+For each theme:
+1. Name the weakness and relevant `BF-###` IDs when available.
+2. State the recommendation.
+3. State the source basis using relevant `FS-###` IDs, or label it **Reasoning-only / Provisional**.
+4. Explain why the source fits the context when that is not obvious.
+5. Choose the control by failure mechanism.
+6. Make the strength of treatment proportional to the exposure.
+7. Preserve useful options and learning loops where they add value.
+8. Flag unresolved human decisions as **Decision Required**.
 
-If a recommendation requires a decision the user hasn't made, flag it as **Decision Required** in the output. Do not invent the decision.
+Do not present Supporting or Weak evidence as sufficient authority for a material recommendation.
 
-If the related Break finding is **Awaiting External Input** and the missing decision materially determines treatment direction, keep that recommendation provisional and do not encode one option into the Strengthened Artifact as if it were approved.
+### New Evidence Can Reopen Break
+
+If a Governing source or Reliable evidence materially invalidates a Break treatment already marked **Accepted recommendation, Alternative selected, or Accepted risk**:
+1. Do not implement the conflicting treatment.
+2. Flag the same `BF-###` as **Reopen in Break — Source Conflict**.
+3. State the conflicting `FS-###` source and why it changes the treatment.
+4. Preserve the prior Break decision as history; do not silently overwrite it.
+5. Continue strengthening unaffected themes.
+
+Do not create a new `BF-###` merely because new evidence invalidates an existing treatment. Break should selectively re-evaluate that finding.
+
+---
 
 ### Step 5 — Strengthen the Artifact
-Incorporate all approved or safely conditionable recommendations into the plan. Where applicable, improve: objectives, scope, sequencing, ownership, responsibilities, dependencies, governance, decision rights, controls, measures, acceptance criteria, contingencies, communications, implementation steps, escalation paths.
 
-For recommendations blocked by unresolved external input:
-* Preserve the relevant place in the artifact as **Decision Required / Awaiting External Input**.
-* State the `BF-###` finding that blocks finalization in Break-backed mode, or the source weakness in Direct mode.
-* Preserve viable options when possible rather than choosing one silently.
-* Do not treat provisional language as an approved control.
+Incorporate recommendations that are approved and safe to implement.
 
-Replace vague completion language with observable criteria. Use context-appropriate metrics rather than inventing arbitrary numbers.
+For blocked recommendations:
+* preserve **Decision Required / Awaiting External Input**;
+* name the blocking `BF-###` or source-document weakness;
+* preserve viable options rather than selecting one silently.
 
-### Step 6 — Trace Changes
-Every material change maps back to at least one of:
-* Original requirement or source section
-* Frame finding or `FQ-###` question
-* Break finding or `BF-###` finding
-* Direct-mode provisional weakness
-* Governing or User Approved source from the Source Register
-* Explicit user decision
+For reasoning-only material recommendations that still need evidence:
+* keep the language provisional;
+* do not present the control as final or externally validated.
+
+Replace vague completion language with observable criteria. Do not invent arbitrary metrics.
+
+---
+
+### Step 6 — Resume Fortify
+
+When Fortify receives an existing Fortify artifact:
+1. Preserve existing `FS-###` and `BF-###` references.
+2. Inspect Candidate sources, unresolved decisions, and reopened Break findings first.
+3. Incorporate new source approvals, rejections, links, files, or updated Break decisions.
+4. Re-run only the recommendations materially affected by the new input.
+5. Do not restart completed strengthening work unless the underlying artifact materially changed.
+
+Example:
+
+`FS-003: Approved. FS-004: Reject; find an alternative.`
+
+---
 
 ### Step 7 — Re-validate
-Before finishing, check:
-* Original intent remains intact
-* In Break-backed mode, Blockers have been addressed, explicitly accepted, or clearly preserved as unresolved external decisions
-* No deferred `BF-###` decision was silently resolved by Fortify
-* In Direct mode, no provisional weakness is misrepresented as a formal Break finding
-* Material recommendations that claim external grounding use Governing or User Approved design-basis sources
-* Candidate sources awaiting validation are not silently treated as approved
-* Source limitations and conflicting sources remain visible where material
-* New contradictions were not introduced
-* New unsupported claims were not introduced
-* Critical dependencies have owners when known
-* Important outcomes have observable success criteria
-* Conditions from **Ready for Fortify with Conditions** remain visible in the output
-* The selected control actually addresses the failure mechanism rather than merely matching a severity label
+
+Before finishing, verify:
+* original intent remains intact;
+* Break conditions remain visible;
+* no deferred `BF-###` decision was silently resolved;
+* no Source Conflict was silently ignored;
+* AI-found material source candidates were not silently treated as approved;
+* source Quality was not upgraded merely because the user approved it;
+* reasoning-only material recommendations remain provisional when grounding is materially required;
+* selected controls address the actual failure mechanism;
+* no unsupported claims or new contradictions were introduced.
 
 ---
 
 ## Output
 
-Produce three layers:
+Produce three concise layers.
 
 ### Layer 0 — Source Register
 
-Record material sources used or considered:
+| FS ID | Source | Supports | Quality | Use | Applicability / limitation |
+|---|---|---|---|---|---|
 
-| Field | Content |
-|---|---|
-| **Source** | Title / issuing body / reference |
-| **Type** | Governing requirement, internal approved reference, official standard, methodology/framework, peer-reviewed research, first-party documentation, etc. |
-| **Supports** | Theme, `BF-###`, or Direct-mode weakness it informs |
-| **Applicability** | Why it fits this artifact and context |
-| **Limitations** | Important scope, jurisdiction, population, version, or applicability constraint |
-| **Status** | Governing / User Approved / Candidate — Awaiting User Validation / Rejected |
-
-Do not clutter the register with every incidental factual citation. Track the material sources that form the design basis or materially constrain the solution.
+Only include material design-basis or governing sources.
 
 ### Layer 1 — Targeted Recommendations
 
-For each theme:
-
-| Field | Content |
-|---|---|
-| **Theme** | The shared root cause or domain |
-| **Weakness** | Break finding(s) with `BF-###` IDs, or Direct-mode provisional weakness |
-| **Recommendation** | The concrete action to take |
-| **Source Basis** | Governing or User Approved source(s), with citation and claim classification; otherwise clearly marked reasoning-only |
-| **Source Fit** | Why the selected source applies to this context |
-| **Margin of Safety** | The specific protection or control added and why it fits the failure mechanism |
-| **Optionality Preserved** | What future options this keeps open, when applicable |
-| **Learning Loop** | What this teaches the plan for the next cycle, when applicable |
-| **Decision Required** | Any unresolved decision, including blocking `BF-###` IDs when applicable |
+For each theme include:
+* **Theme / weakness**
+* **Recommendation**
+* **Source Basis** — `FS-###` IDs or `Reasoning-only / Provisional`
+* **Control / margin of safety**
+* **Trade-off**
+* **Decision Required** — when applicable
 
 ### Layer 2 — Strengthened Artifact
 
-The revised plan incorporating all approved or safely conditionable Layer 1 recommendations. Include:
+Include:
+* **Strengthened Artifact**
+* **Change Ledger** — material changes only
+* **Residual Risks**
+* **Outstanding Decisions / Source Conflicts**
+* **Final Verdict** — Ready, Ready with conditions, or Not ready
 
-* **A. Strengthened Artifact**: The revised plan, playbook, framework, or document.
-* **B. Change Ledger**: For material changes, record: Change, Reason, Source finding/weakness, Source Basis, Trade-off.
-* **C. Residual Risks**: Anything deliberately left unresolved or explicitly accepted.
-* **D. Validation Matrix**: Table format: `Requirement | Evidence | Test | Status`.
-* **E. Outstanding Decisions**: Any unresolved item that prevents finalizing a treatment, with the required decision/input and current condition.
-* **F. Final Verdict**: Ready, Ready with conditions, or Not ready. Explain conditions or blockers.
+In Direct mode, state that no formal Break analysis was performed.
 
-In Direct mode, include a visible note that the artifact was strengthened **without a formal Break Report**.
+---
 
-If Break readiness was **Awaiting External Input**, Fortify's output must not claim full readiness while a blocking treatment decision remains unresolved.
+## Fortify Status
+
+Use:
+* **Complete** — strengthening work is complete and no material source validation or upstream treatment recheck remains.
+* **Awaiting Source Validation** — material `FS-###` candidates still require user approval before recommendations can be finalized.
+* **In Progress** — strengthening analysis, required source grounding, or a required Break recheck is incomplete.
+
+A reasoning-only pass may produce useful provisional recommendations, but Fortify should not be marked Complete with a fully `Ready` verdict when material recommendations still require external grounding.
 
 ---
 
 ## Completion Criterion
 
-Fortify is complete when all applicable conditions are met:
+Fortify is complete when:
+* the source path is explicit;
+* material sources have stable `FS-###` IDs with Quality and Use recorded;
+* material externally grounded recommendations use applicable Governing or Reliable + Approved sources;
+* reasoning-only material recommendations are either grounded or remain explicitly provisional;
+* source conflicts that invalidate Break decisions are routed back to the same `BF-###` for selective re-evaluation;
+* all safely implementable recommendations are incorporated; and
+* unresolved decisions, source validation, and residual risks remain explicit.
 
-1. **The source grounding path is explicit** — user-provided, AI-searched and user-validated, hybrid, or explicitly reasoning-only.
-2. **Material external design-basis sources are recorded in the Source Register** with applicability and status.
-3. **AI-searched candidate sources are not silently promoted to approved design basis**; the user validates material candidates before Fortify relies on them as authoritative guidance.
-4. **Every theme that can be responsibly treated has a targeted recommendation** with appropriate evidence and a treatment that fits the actual weakness.
-5. **Margin of safety is proportional to the exposure** without mechanically mapping severity to a control type.
-6. **Optionality and learning loops are included where they materially improve resilience**, not as mandatory decoration.
-7. **Approved or safely conditionable recommendations are incorporated into the Strengthened Artifact**.
-8. **Blocking external decisions remain explicit** — Fortify never resolves a deferred `BF-###` decision by assumption.
-9. **Mode integrity is preserved** — Direct mode never implies that a formal Break analysis occurred.
-
-If a blocking Break finding is still **Awaiting External Input**, Fortify may produce partial/provisional work for unaffected areas, but the strengthened artifact is not final for the blocked treatment path. The final verdict must reflect that dependency.
+The goal is not to collect many citations. The goal is to make the strengthening basis reliable, visible, and resumable without adding unnecessary process.

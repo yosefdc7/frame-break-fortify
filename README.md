@@ -16,21 +16,35 @@ The system optimizes for **process predictability rather than identical answers*
 | **Break** | Adversary | *How would this plan fail in the hands of reality?* |
 | **Fortify** | Engineer | *How do we make it survive — and get stronger from — the failures we found?* |
 
-Frame and Break interview you with structured decision menus until the artifact is ready. Fortify is an **engineer, not a compiler** — it adds controls, contingencies, and design principles the original plan never contained, grounded in external knowledge.
+Frame reconstructs the artifact, researches what it can establish independently, and interviews the user only for material unresolved gaps. A question can be **answered now, deferred to someone else, or resumed later**. Frame can therefore complete its reconstruction even when external stakeholder input is still outstanding. Break continues the adversarial interview when human judgment is required. Fortify is an **engineer, not a compiler** — it adds controls, contingencies, and design principles the original plan never contained, grounded in external knowledge.
 
 ---
 
 ## The Pipeline
 
 ```
-                    ┌──────────────────────────────┐
-  your document ──▶ │  /frame                      │
-                    │  reconstruct intent, logic,  │
-                    │  evidence                    │
-                    │  → Grill to Readiness        │
-                    │    (A/B/C decision menus)    │
-                    └──────────────┬───────────────┘
+                    ┌────────────────────────────────┐
+  your document ──▶ │  /frame                        │
+                    │  reconstruct intent, logic,    │
+                    │  evidence                      │
+                    │  → Grill material gaps         │
+                    │    A/B/C resolution paths      │
+                    │    D = ask someone else        │
+                    └──────────────┬─────────────────┘
                                    ▼  Frame Brief
+                         ┌─────────┴─────────┐
+                         │                   │
+                         ▼                   ▼
+                  Ready for Break     Awaiting External Input
+                         │                   │
+                         │          FQ-### questions routed
+                         │                   │
+                         │          answers obtained later
+                         │                   │
+                         │          /frame existing brief
+                         │                   │
+                         └─────────┬─────────┘
+                                   ▼
                     ┌──────────────────────────────┐
                     │  /break                      │
                     │  premortem, inversion,       │
@@ -58,16 +72,33 @@ Each skill can be used independently, but the sequence is where the system earns
 
 ### `/frame` — Establish the truth
 
-Reconstructs the document into a clear, evidence-aware mental model before judging or changing it. Withholds all critique.
+Reconstructs the document into a clear, evidence-aware mental model before judging or changing it. Withholds all critique and turns missing information into explicit, resumable questions rather than forcing the current user to know every answer.
 
 * **Evidence-first reconstruction** — every material claim is classified as *Verified, Supported, Inferred, Assumed,* or *Unknown* against an evidence hierarchy that prefers governing laws and official standards over repeated web claims.
-* **Ambiguity scan** — surfaces undefined terminology, conflicting requirements, missing owners, unclear dependencies, unclear decision rights, non-measurable outcomes, and assumptions disguised as facts.
-* **Frame Brief** — executive interpretation, intended outcomes, logic/operating model, key assumptions, dependencies, evidence ledger, unknowns, decisions requiring confirmation, potential contradictions, readiness verdict.
-* **Grill to Readiness** — if the brief has blocking gaps, a structured interview resolves them one question at a time. Each question offers **structured A/B/C options** describing the approach, risk posture, and trade-offs, with one marked *(recommended)*. Includes a reference catalog of probing question patterns organized by assessment dimension.
+* **Ambiguity scan** — surfaces undefined terminology, conflicting requirements, missing owners, unclear dependencies, unclear decision rights, non-measurable outcomes, assumptions disguised as facts, and external decisions that still need confirmation.
+* **Material questions only** — Frame assesses Intent, Logic, Evidence, Ambiguity, Dependencies, and Decisions, but asks only questions that could materially change the artifact or its readiness for stress-testing.
+* **Grill with defer option** — questions are asked one at a time. When genuine resolution choices exist, Frame offers **A/B/C options** with risk posture and trade-offs plus **D. Ask someone else / save this question**. The user may also provide a custom answer.
+* **Stable `FQ-###` IDs** — each material question receives a permanent identifier so stakeholders can answer later without reproducing the full question.
+* **Questions for Others** — deferred questions are captured in the Frame Brief with the question, why it matters, suggested respondent role, Blocking/Non-blocking classification, status, and eventual answer. Questions may be grouped by likely respondent for easy handoff through email, chat, or meetings.
+* **Resume later** — running `/frame` on an existing Frame Brief resumes the prior review, preserves question IDs, incorporates newly supplied answers, updates affected assumptions/evidence/dependencies/decisions, and recalculates readiness without restarting completed work.
+* **Frame Brief** — executive interpretation, intended outcomes, logic/operating model, key assumptions, dependencies, evidence ledger, unknowns, decisions requiring confirmation, Questions for Others, potential contradictions, Frame status, and Break readiness.
+* **Separate completion from readiness** — Frame can be **Complete** even when external answers are still outstanding. Break readiness is reported separately as:
+  * **Ready for Break** — no material blocking questions remain.
+  * **Ready for Break with Conditions** — unresolved questions remain but meaningful stress-testing can proceed under stated conditions.
+  * **Awaiting External Input** — one or more deferred/open questions materially prevent reliable stress-testing.
 
 ```
 /frame <document>
+/frame <existing Frame Brief>
 ```
+
+Example continuation:
+
+```
+FQ-003: Steering Committee is the final approver.
+```
+
+Frame incorporates the answer into the existing brief, closes `FQ-003`, updates affected sections, and recalculates readiness.
 
 ### `/break` — Expose the weakness
 
@@ -135,12 +166,12 @@ See `skills/*/references/evidence-contract.md` for the full contract.
 
 | You bring | Frame produces | Break produces | Fortify produces |
 |---|---|---|---|
-| A draft plan | Frame Brief (intent, evidence, gaps) | Break Report (failure paths, priorities) | Targeted Recommendations + Strengthened Artifact |
-| A playbook | Reconstructed logic + assumptions | Fragile assumptions + missing controls | Margin of safety controls + contingencies |
-| A change-management strategy | Stakeholder map + decision register | Premortem chains + contradiction analysis | Optionality + learning loops per theme |
-| A governance document | Evidence ledger + ambiguity list | Edge cases + dependency failures | Graceful degradation paths + scorecards |
+| A draft plan | Frame Brief (intent, evidence, gaps, deferred questions) | Break Report (failure paths, priorities) | Targeted Recommendations + Strengthened Artifact |
+| A playbook | Reconstructed logic + assumptions + routed questions | Fragile assumptions + missing controls | Margin of safety controls + contingencies |
+| A change-management strategy | Stakeholder map + decision register + external questions | Premortem chains + contradiction analysis | Optionality + learning loops per theme |
+| A governance document | Evidence ledger + ambiguity list + Questions for Others | Edge cases + dependency failures | Graceful degradation paths + scorecards |
 
-Frame and Break interview you when they find gaps. Fortify flags decisions it cannot make for you as **Decision Required** — it proceeds with the recommendation and lets you choose.
+Frame interviews the user when it finds material gaps, but does not require the current user to personally resolve every question. Deferred questions become explicit stakeholder follow-ups and can be resumed later. Break stress-tests once the Frame Brief is sufficiently ready. Fortify flags decisions it cannot make for you as **Decision Required** — it proceeds with the recommendation and lets you choose.
 
 ---
 

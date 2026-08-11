@@ -1,17 +1,12 @@
 # Changelog
 
-Notable changes to the repository's Project Manager agent skills are recorded here.
+Notable changes to **Frame → Break → Fortify** are recorded here.
 
 The repository's `SKILL.md` files remain the source of truth for behavior. Changes that are already committed but not yet released under a new plugin version stay under **Unreleased**.
 
 ## Unreleased
 
 ### Added
-- **Project Manager: Solution Exploration** as a separate two-skill workflow:
-  - `solution-explore` — **Grill → Ground → Diverge** from a problem into a credible set of materially different solution options.
-  - `solution-decide` — **Verify → Filter → Compare → Recommend** from solution options into a defensible recommendation.
-- Stable `EQ-###` exploration questions and `SO-###` solution option IDs, with resumable exploration and deferred external questions.
-- Hard-constraint gating, qualitative trade-off comparison, runner-up conditions, and decision-specific grilling in `solution-decide`.
 - FRAME deferred-question workflow with stable `FQ-###` IDs, a canonical Question Register, `Questions for Others`, and resume support.
 - BREAK deferred-decision workflow with stable `BF-###` IDs, accepted-risk handling, external decision handoff, and selective resume.
 - Readiness gates between FRAME → BREAK and BREAK → FORTIFY.
@@ -22,7 +17,6 @@ The repository's `SKILL.md` files remain the source of truth for behavior. Chang
 - FORTIFY → BREAK feedback path when new governing or reliable evidence invalidates an existing `BF-###` treatment.
 
 ### Changed
-- README now documents both the document-review pipeline and the independent Project Manager: Solution Exploration workflow.
 - `Open` is now transient in FRAME and BREAK; completed reviews require terminal dispositions for material questions/findings.
 - FRAME and BREAK completion are separated from downstream readiness.
 - FRAME clarification questions are kept reconstructive; premortem, inversion, kill-condition, and worst-case failure testing belong to BREAK.

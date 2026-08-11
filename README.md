@@ -2,13 +2,13 @@
 
 Agent Skills for reviewing and strengthening plans, playbooks, frameworks, strategies, operating models, specifications, governance documents, and similar business artifacts.
 
-The repository also includes **Project Manager: Solution Exploration**, a separate two-skill workflow for exploring and choosing solutions before a proposal is finalized.
+**Frame like a reviewer. Break like an adversary. Fortify like an engineer.**
 
 The `SKILL.md` files and their references are the source of truth. This README is a concise operating overview.
 
 ---
 
-## Document Review Pipeline
+## The Pipeline
 
 ```text
 SOURCE DOCUMENT
@@ -82,6 +82,12 @@ Break readiness:
 /frame <existing Frame Brief>
 ```
 
+Example resume:
+
+```text
+FQ-003: Steering Committee is the final approver.
+```
+
 ---
 
 ## `/break` — Expose the weakness
@@ -122,124 +128,98 @@ If Fortify later finds strong evidence that invalidates an accepted Break treatm
 
 Fortify turns weaknesses into concrete controls and improvements.
 
-**Break-backed mode** is preferred. **Direct mode** is allowed when the user intentionally skips Break; Direct-mode weaknesses remain provisional and no fake `BF-###` IDs are created.
+### Modes
+
+**Break-backed mode** is preferred. It uses `BF-###` findings and respects Fortify readiness.
+
+**Direct mode** is allowed when the user intentionally skips Break. Direct-mode weaknesses remain provisional and no fake `BF-###` IDs are created.
+
+### Source path
 
 Before material externally grounded recommendations are finalized, Fortify asks the user to choose:
-* **Provide sources**
-* **Search for candidates**
-* **Hybrid**
 
-Every material source gets a stable `FS-###` ID with separate **Quality** (`Governing`, `Reliable`, `Supporting`, `Weak`) and **Use** (`Approved`, `Candidate`, `Rejected`). User approval does not upgrade source quality.
+* **Provide sources** — upload/share approved PPMs, policies, frameworks, standards, methodologies, scientific studies, or other trusted references.
+* **Search for candidates** — Fortify finds strong candidates and the user validates which ones may be used.
+* **Hybrid** — use supplied sources first, then search for gaps.
 
-A reasoning-only pass is allowed, but material recommendations remain provisional when external grounding is materially needed.
+If search tools are unavailable, Fortify must not fabricate sources; it asks the user to provide them instead.
+
+### Lean `FS-###` Source Register
+
+Every material source gets a stable `FS-###` ID with two separate judgments:
+
+**Quality**
+* `Governing` — binding requirement that applies
+* `Reliable` — strong enough to drive a material recommendation
+* `Supporting` — useful corroboration, but not strong enough alone
+* `Weak` — not suitable as a material design basis
+
+**Use**
+* `Approved`
+* `Candidate`
+* `Rejected`
+
+User approval controls whether a source is selected. It does **not** upgrade source quality.
+
+Material external recommendations should rely on applicable **Governing** sources or **Reliable + Approved** sources.
+
+### Reasoning-only
+
+A reasoning-only Fortify pass is allowed, but material recommendations remain **provisional** when external grounding is materially needed. They cannot support a fully `Ready` final verdict until adequately grounded.
+
+### Fortify can resume
 
 ```text
-/fortify <document>
-/fortify <document> BREAK-REVIEW.md
 /fortify <existing Fortify artifact>
 ```
 
----
-
-# Project Manager: Solution Exploration
-
-Use this workflow when you have a **problem to solve but have not yet committed to a solution**.
-
-It is intentionally separate from Frame → Break → Fortify.
+Example:
 
 ```text
-PROBLEM + CONTEXT + CONSTRAINTS
-              │
-              ▼
-         /explore
-   GRILL → GROUND → DIVERGE
-              │
-              ▼
-      SOLUTION OPTIONS
-              │
-              ▼
-          /decide
- VERIFY → FILTER → COMPARE → RECOMMEND
-              │
-              ▼
-       SOLUTION DECISION
+FS-003: Approved. FS-004: Reject; find an alternative.
 ```
 
-## `/explore` — Build the right solution space
-
-`solution-explore`:
-* grills the problem, desired outcome, scope, hard constraints, preferences, assumptions, unknowns, and likely decision criteria;
-* uses stable `EQ-###` IDs for material questions and allows questions to be deferred to someone else;
-* asks the user to **provide sources**, **search reliable sources**, or use a **hybrid** approach;
-* makes important evidence and limitations visible; and
-* generates materially different solution archetypes with stable `SO-###` IDs.
-
-It deliberately **does not rank or select a winner**.
-
-```text
-/explore <problem or context>
-/explore <existing Solution Options>
-```
-
-Output: **Solution Options** with status `Ready for Decision`, `Ready for Decision with Conditions`, or `Needs More Input`.
-
-## `/decide` — Compare and recommend
-
-`solution-decide`:
-* verifies the decision basis and asks only decision-specific questions that could materially change the ranking;
-* treats hard constraints as **gates, not weighted criteria**;
-* compares viable options on criteria that actually matter;
-* prefers qualitative comparison over invented numeric precision;
-* makes trade-offs explicit, including when the runner-up should win instead; and
-* ranks viable options and gives one clear recommendation when the evidence supports it.
-
-```text
-/decide <Solution Options>
-/decide <options + context>
-/decide <existing Solution Decision>
-```
-
-Output: **Solution Decision** with status `Ready to Decide`, `Ready with Conditions`, or `Decision Not Ready`.
-
-### Boundary
-
-| Solution Explore | Solution Decide |
-|---|---|
-| Understand the problem | Understand the decision |
-| Grill problem and constraints | Grill only missing decision criteria |
-| Ground the solution space | Fill only material comparison gaps |
-| Generate distinct alternatives | Filter and compare alternatives |
-| Keep options open | Converge |
-| **No ranking** | **Rank** |
-| **No winner** | **Recommend a winner** |
+Fortify status:
+* `Complete`
+* `Awaiting Source Validation`
+* `In Progress`
 
 ---
 
 ## Traceability
 
-### Document review
+The intended chain is:
 
 ```text
-FQ-### → BF-### → FS-### → Fortify recommendation → Strengthened Artifact
+FQ-###
+clarification / external question
+      ↓
+BF-###
+failure finding / treatment decision
+      ↓
+FS-###
+source basis
+      ↓
+Fortify recommendation
+      ↓
+Strengthened Artifact
 ```
 
-### Solution exploration
-
-```text
-EQ-### → SO-### solution options → comparison → recommendation
-```
+If a new `FS-###` source invalidates a Break treatment, Fortify routes the same `BF-###` back to Break for selective re-evaluation.
 
 ---
 
-## Evidence Principles
+## Evidence Contract
 
-Across the repository:
-* prefer governing and authoritative primary sources over unsupported common practice;
-* distinguish evidence from inference and assumption;
-* apply frameworks only when they fit the actual context;
-* never fabricate sources or pretend they were retrieved;
-* expose important limitations and uncertainty; and
-* avoid false precision in rankings or recommendations.
+All three skills share the same evidence rules:
+* governing and authoritative primary sources outrank unsupported common practice;
+* distinguish claims as Verified, Supported, Inferred, Assumed, or Unknown;
+* apply frameworks only when they fit the artifact and context;
+* user approval does not change source quality;
+* never fabricate sources or pretend they were retrieved; and
+* cite external standards, research, regulations, or methodologies used to support recommendations.
+
+See `skills/*/references/evidence-contract.md`.
 
 ---
 
@@ -248,11 +228,9 @@ Across the repository:
 ```text
 CHANGELOG.md
 skills/
-  frame/             SKILL.md + references/
-  break/             SKILL.md + references/
-  fortify/           SKILL.md + references/
-  solution-explore/  SKILL.md
-  solution-decide/   SKILL.md
+  frame/    SKILL.md + references/
+  break/    SKILL.md + references/
+  fortify/  SKILL.md + references/
 docs/
   INSTRUCTIONS_PM.md
 plugin.json
@@ -264,6 +242,10 @@ plugin.json
 git clone https://github.com/yosefdc7/frame-break-fortify.git
 ```
 
-Copy or symlink the desired folders under `skills/` into your agent's skills directory.
+Copy or symlink the folders under `skills/` into your agent's skills directory.
 
-See `docs/INSTRUCTIONS_PM.md` for the Frame → Break → Fortify PM workflow. See [`CHANGELOG.md`](CHANGELOG.md) for notable changes and unreleased work.
+See `docs/INSTRUCTIONS_PM.md` for a practical PM workflow. See [`CHANGELOG.md`](CHANGELOG.md) for notable changes and unreleased work.
+
+---
+
+*Establish the truth. Stress-test the weakness. Strengthen from reliable evidence.*

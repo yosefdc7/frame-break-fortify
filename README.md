@@ -6,6 +6,10 @@ Agent Skills for reviewing and strengthening plans, playbooks, frameworks, strat
 
 The `SKILL.md` files and their references are the source of truth. This README is a concise operating overview.
 
+## Workflow at a glance
+
+![Frame → Break → Fortify architecture](docs/frame-break-fortify-architecture.png)
+
 ---
 
 ## The Pipeline
